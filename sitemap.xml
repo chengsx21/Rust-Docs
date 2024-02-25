@@ -6,52 +6,22 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://chengsx21.github.io/Rust-Docs/implement/</loc>
+         <loc>https://chengsx21.github.io/Rust-Docs/doc-1/</loc>
          <lastmod>2024-02-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://chengsx21.github.io/Rust-Docs/recall/</loc>
+         <loc>https://chengsx21.github.io/Rust-Docs/doc-2/</loc>
          <lastmod>2024-02-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://chengsx21.github.io/Rust-Docs/structure/</loc>
+         <loc>https://chengsx21.github.io/Rust-Docs/doc-3/</loc>
          <lastmod>2024-02-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://chengsx21.github.io/Rust-Docs/modules/api/</loc>
-         <lastmod>2024-02-25</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://chengsx21.github.io/Rust-Docs/modules/database/</loc>
-         <lastmod>2024-02-25</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://chengsx21.github.io/Rust-Docs/modules/django/</loc>
-         <lastmod>2024-02-25</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://chengsx21.github.io/Rust-Docs/modules/frontend/</loc>
-         <lastmod>2024-02-25</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://chengsx21.github.io/Rust-Docs/modules/search-api/</loc>
-         <lastmod>2024-02-25</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://chengsx21.github.io/Rust-Docs/modules/search/</loc>
-         <lastmod>2024-02-25</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://chengsx21.github.io/Rust-Docs/modules/spider/</loc>
+         <loc>https://chengsx21.github.io/Rust-Docs/doc-4/</loc>
          <lastmod>2024-02-25</lastmod>
          <changefreq>daily</changefreq>
     </url>
