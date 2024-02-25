@@ -1,10 +1,10 @@
-site_name: GifExplorer - 图片检索系统
-site_description: 关于 GifExplorer - 图片检索系统的说明文档
-site_author: 陈鑫圣 程思翔 李羽飞 刘竞暄 卢天彧
+site_name: RustDocs - 个人 Rust 学习文档
+site_description: 关于 RustDocs - 个人 Rust 学习的说明文档
+site_author: 程思翔
 site_url: https://chengsx21.github.io/Rust-Docs/
-copyright: Copyright © 2023 [Nullptr]
+copyright: Copyright © 2024 [Nullptr]
 
-repo_name: 'chengsx21/GifExplorer-docs'
+repo_name: 'chengsx21/Rust-Docs'
 repo_url: 'https://github.com/chengsx21/Rust-Docs'
 
 theme:
@@ -82,17 +82,8 @@ markdown_extensions:
 
 nav:
   - 概述: index.md
-  - 需求及分析: 
-    - 需求分析: structure.md
-    - 需求实现: implement.md
-    - 检索召回率分析: recall.md
-  - 模块设计:
-    - 数据库设计: modules/database.md
-    - 接口设计: 
-      - 通用接口: modules/api.md
-      - 搜索接口: modules/search-api.md
-    - 各模块主要设计:
-      - 爬虫: modules/spider.md
-      - 检索: modules/search.md
-      - 前端: modules/frontend.md
-      - 后端: modules/django.md
+  - 学习笔记: 
+    - 从 Cargo 说到基本类型: doc-1.md
+    - 所有权与进阶类型: doc-2.md
+    - 结构体与模式匹配: doc-3.md
+    - 泛型与特征: doc-4.md

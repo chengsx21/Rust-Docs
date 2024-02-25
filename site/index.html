@@ -6,24 +6,24 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="关于 GifExplorer - 图片检索系统的说明文档">
+        <meta name="description" content="关于 RustDocs - 个人 Rust 学习的说明文档">
       
       
-        <meta name="author" content="陈鑫圣 程思翔 李羽飞 刘竞暄 卢天彧">
+        <meta name="author" content="程思翔">
       
       
         <link rel="canonical" href="https://chengsx21.github.io/Rust-Docs/">
       
       
       
-        <link rel="next" href="structure/">
+        <link rel="next" href="doc-1/">
       
       <link rel="icon" href="images/logo.svg">
       <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.14">
     
     
       
-        <title>GifExplorer - 图片检索系统</title>
+        <title>RustDocs - 个人 Rust 学习文档</title>
       
     
     
@@ -75,7 +75,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#gifexplorer" class="md-skip">
+        <a href="#rustdocs" class="md-skip">
           跳转至
         </a>
       
@@ -89,7 +89,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="页眉">
-    <a href="." title="GifExplorer - 图片检索系统" class="md-header__button md-logo" aria-label="GifExplorer - 图片检索系统" data-md-component="logo">
+    <a href="." title="RustDocs - 个人 Rust 学习文档" class="md-header__button md-logo" aria-label="RustDocs - 个人 Rust 学习文档" data-md-component="logo">
       
   <img src="images/logo.svg" alt="logo">
 
@@ -101,7 +101,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            GifExplorer - 图片检索系统
+            RustDocs - 个人 Rust 学习文档
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -189,7 +189,7 @@
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
   </div>
   <div class="md-source__repository">
-    chengsx21/GifExplorer-docs
+    chengsx21/Rust-Docs
   </div>
 </a>
       </div>
@@ -231,24 +231,8 @@
   
   
     <li class="md-tabs__item">
-      <a href="structure/" class="md-tabs__link">
-        需求及分析
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-
-
-  
-  
-  
-    <li class="md-tabs__item">
-      <a href="modules/database/" class="md-tabs__link">
-        模块设计
+      <a href="doc-1/" class="md-tabs__link">
+        学习笔记
       </a>
     </li>
   
@@ -275,12 +259,12 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="GifExplorer - 图片检索系统" class="md-nav__button md-logo" aria-label="GifExplorer - 图片检索系统" data-md-component="logo">
+    <a href="." title="RustDocs - 个人 Rust 学习文档" class="md-nav__button md-logo" aria-label="RustDocs - 个人 Rust 学习文档" data-md-component="logo">
       
   <img src="images/logo.svg" alt="logo">
 
     </a>
-    GifExplorer - 图片检索系统
+    RustDocs - 个人 Rust 学习文档
   </label>
   
     <div class="md-nav__source">
@@ -290,7 +274,7 @@
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
   </div>
   <div class="md-source__repository">
-    chengsx21/GifExplorer-docs
+    chengsx21/Rust-Docs
   </div>
 </a>
     </div>
@@ -314,40 +298,9 @@
         
       
       
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          概述
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
       <a href="." class="md-nav__link md-nav__link--active">
         概述
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="目录">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      目录
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    项目目标
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
       
     </li>
   
@@ -376,17 +329,19 @@
         
           
         
+          
+        
       
       
         <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
-          需求及分析
+          学习笔记
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
         <label class="md-nav__title" for="__nav_2">
           <span class="md-nav__icon md-icon"></span>
-          需求及分析
+          学习笔记
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
@@ -396,8 +351,8 @@
   
   
     <li class="md-nav__item">
-      <a href="structure/" class="md-nav__link">
-        需求分析
+      <a href="doc-1/" class="md-nav__link">
+        从 Cargo 说到基本类型
       </a>
     </li>
   
@@ -410,8 +365,8 @@
   
   
     <li class="md-nav__item">
-      <a href="implement/" class="md-nav__link">
-        需求实现
+      <a href="doc-2/" class="md-nav__link">
+        所有权与进阶类型
       </a>
     </li>
   
@@ -424,114 +379,8 @@
   
   
     <li class="md-nav__item">
-      <a href="recall/" class="md-nav__link">
-        检索召回率分析
-      </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-      
-      
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
-      
-      
-        
-          
-        
-          
-        
-          
-        
-      
-      
-        <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
-          模块设计
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
-        <label class="md-nav__title" for="__nav_3">
-          <span class="md-nav__icon md-icon"></span>
-          模块设计
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="modules/database/" class="md-nav__link">
-        数据库设计
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    
-      
-    
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
-      
-      
-      
-      
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
-      
-      
-        
-          
-        
-          
-        
-      
-      
-        <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
-          接口设计
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
-        <label class="md-nav__title" for="__nav_3_2">
-          <span class="md-nav__icon md-icon"></span>
-          接口设计
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="modules/api/" class="md-nav__link">
-        通用接口
+      <a href="doc-3/" class="md-nav__link">
+        结构体与模式匹配
       </a>
     </li>
   
@@ -544,118 +393,9 @@
   
   
     <li class="md-nav__item">
-      <a href="modules/search-api/" class="md-nav__link">
-        搜索接口
+      <a href="doc-4/" class="md-nav__link">
+        泛型与特征
       </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    
-      
-    
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
-      
-      
-      
-      
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
-      
-      
-        
-          
-        
-          
-        
-          
-        
-          
-        
-      
-      
-        <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
-          各模块主要设计
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
-        <label class="md-nav__title" for="__nav_3_3">
-          <span class="md-nav__icon md-icon"></span>
-          各模块主要设计
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="modules/spider/" class="md-nav__link">
-        爬虫
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="modules/search/" class="md-nav__link">
-        检索
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="modules/frontend/" class="md-nav__link">
-        前端
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="modules/django/" class="md-nav__link">
-        后端
-      </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
     </li>
   
 
@@ -687,21 +427,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      目录
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    项目目标
-  </a>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -718,15 +443,11 @@
   
 
 
-<h1 id="gifexplorer">GifExplorer 图片检索系统说明文档<a class="headerlink" href="#gifexplorer" title="Permanent link">&para;</a></h1>
+<h1 id="rustdocs">RustDocs 个人笔记文档<a class="headerlink" href="#rustdocs" title="Permanent link">&para;</a></h1>
 <div class="admonition tip">
 <p class="admonition-title">Instruction</p>
-<p>本项目由清华大学 2022 - 2023 学年春季学期软件工程课题组发布，由 Nullptr 小组完成。</p>
-<p>特别鸣谢裴丹老师、刘玉河助教、成逸然助教、田倍闻助教为本项目提供的帮助与支持。</p>
+<p>本项目是本人进行 Rust 学习的自用笔记。</p>
 </div>
-<h2 id="_1">项目目标<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
-<p><img alt="⭐️" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/png/2b50.png" title=":star:" /> 我们致力于实现一个综合全网多个 Gif 站点、适合当代年轻人审美的 Gif 检索网站。</p>
-<p><img alt="😄" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/png/1f604.png" title=":smile:" /> 如果你渴望从 Gif 中获取新颖的视觉体验，那么就请快速加入<a href="https://gifexplorer-frontend-nullptr.app.secoder.net/" title="GifExplorer 图片检索系统首页">属于我们的世界</a>。</p>
 <p><img alt="This is GifExplorer" src="assets/avatar.png" /></p>
 
 
@@ -754,7 +475,7 @@
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      Copyright © 2023 [Nullptr]
+      Copyright © 2024 [Nullptr]
     </div>
   
   
