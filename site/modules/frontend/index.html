@@ -1,0 +1,1304 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="关于 GifExplorer - 图片检索系统的说明文档">
+      
+      
+        <meta name="author" content="陈鑫圣 程思翔 李羽飞 刘竞暄 卢天彧">
+      
+      
+        <link rel="canonical" href="https://chengsx21.github.io/Rust-Docs/modules/frontend/">
+      
+      
+        <link rel="prev" href="../search/">
+      
+      
+        <link rel="next" href="../django/">
+      
+      <link rel="icon" href="../../images/logo.svg">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.14">
+    
+    
+      
+        <title>前端 - GifExplorer - 图片检索系统</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.85bb2934.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.a6bdf11c.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="light-blue" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="GifExplorer - 图片检索系统" class="md-header__button md-logo" aria-label="GifExplorer - 图片检索系统" data-md-component="logo">
+      
+  <img src="../../images/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            GifExplorer - 图片检索系统
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              前端
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+          
+            
+            
+            
+            <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="light-blue" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+            
+              <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>
+              </label>
+            
+          
+            
+            
+            
+            <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+            
+              <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>
+              </label>
+            
+          
+        </form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/chengsx21/Rust-Docs" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    chengsx21/GifExplorer-docs
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../.." class="md-tabs__link">
+      概述
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../structure/" class="md-tabs__link">
+        需求及分析
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../database/" class="md-tabs__link md-tabs__link--active">
+        模块设计
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="GifExplorer - 图片检索系统" class="md-nav__button md-logo" aria-label="GifExplorer - 图片检索系统" data-md-component="logo">
+      
+  <img src="../../images/logo.svg" alt="logo">
+
+    </a>
+    GifExplorer - 图片检索系统
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/chengsx21/Rust-Docs" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    chengsx21/GifExplorer-docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        概述
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+      
+      
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          需求及分析
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          需求及分析
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../structure/" class="md-nav__link">
+        需求分析
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../implement/" class="md-nav__link">
+        需求实现
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../recall/" class="md-nav__link">
+        检索召回率分析
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+      
+      
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+          模块设计
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          模块设计
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../database/" class="md-nav__link">
+        数据库设计
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+      
+      
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+          接口设计
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_3_2">
+          <span class="md-nav__icon md-icon"></span>
+          接口设计
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/" class="md-nav__link">
+        通用接口
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../search-api/" class="md-nav__link">
+        搜索接口
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" checked>
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+          各模块主要设计
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_3_3">
+          <span class="md-nav__icon md-icon"></span>
+          各模块主要设计
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../spider/" class="md-nav__link">
+        爬虫
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../search/" class="md-nav__link">
+        检索
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          前端
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        前端
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    架构设计
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    功能设计
+  </a>
+  
+    <nav class="md-nav" aria-label="功能设计">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    导航栏
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    主页
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    搜索
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    图片
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    用户
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    私信和通知
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    实现
+  </a>
+  
+    <nav class="md-nav" aria-label="实现">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#utils" class="md-nav__link">
+    utils/
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pages" class="md-nav__link">
+    pages/
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#components" class="md-nav__link">
+    components/
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../django/" class="md-nav__link">
+        后端
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    架构设计
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    功能设计
+  </a>
+  
+    <nav class="md-nav" aria-label="功能设计">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    导航栏
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    主页
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    搜索
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    图片
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    用户
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    私信和通知
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    实现
+  </a>
+  
+    <nav class="md-nav" aria-label="实现">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#utils" class="md-nav__link">
+    utils/
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pages" class="md-nav__link">
+    pages/
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#components" class="md-nav__link">
+    components/
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="_1">前端<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<h2 id="_2">架构设计<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p><img alt="前端架构图" src="../../images/%E5%89%8D%E7%AB%AF%E6%9E%B6%E6%9E%84%E5%9B%BE.png" /></p>
+<h2 id="_3">功能设计<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<h3 id="_4">导航栏<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Logo 和主页按钮，可从任意页面跳转至主页。</li>
+<li>未登录状态下：登录按钮，可跳转至登录/注册页面。</li>
+<li>登录状态下：用户头像按钮，提供多项常用操作的悬浮菜单，并跳转至相应页面，包括【上传图片】、【查看图片任务】、【进入个人主页】、【私信】、【用户登出】等功能。</li>
+</ul>
+<h3 id="_5">主页<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<ul>
+<li>图片轮播走马灯，可展示精选的优质图片。</li>
+<li>搜索框，可针对图片标题、上传者、分类、标签分别搜索。</li>
+<li>图片个性推荐列表，可根据登录用户的浏览、搜索等行为个性化推荐图片。</li>
+<li>仪表板，包括【创作中心】、【社区】、【关于我们】三个模块，提供作品数、关注数、粉丝数的数据展示，以及【上传图片】、【管理作品】、【私信】、【分享】等功能的跳转按钮。</li>
+</ul>
+<h3 id="_6">搜索<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<ul>
+<li>搜索对象选择框，可针对图片标题、上传者、分类、标签分别搜索。</li>
+<li>搜索框，在空状态下可显示搜索历史和搜索热词，在用户输入后可根据输入的内容给出搜索推荐。</li>
+<li>搜索模式选择框，可选择搜索采用的匹配模式，包括精确、部分、模糊、关联、正则。</li>
+<li>筛选器，可根据图片的高度、宽度、时长、分类、标签对搜索结果进行筛选。</li>
+<li>搜索结果采用瀑布流式加载，图片支持先低分辨率、后高分辨率加载。</li>
+<li>搜索结果图片支持批量下载和批量分享。</li>
+</ul>
+<h3 id="_7">图片<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<ul>
+<li>图片展示卡片，显示图片内容、标题、分类、标签、尺寸、时长等信息，其中标签和分类可点击跳转至相应的图片搜索结果页。</li>
+<li>上传者展示卡片，显示上传者用户名和头像，实现了上传者主页的跳转按钮，关注按钮。</li>
+<li>图片点赞、下载、分享按钮。</li>
+<li>图片管理卡片，用户可对自己的上传图片进行【修改分类和标签】、【添加水印】、【删除】操作。</li>
+<li>图片评论区，支持发表评论、删除评论、点赞评论、楼中楼等功能。</li>
+<li>上传图片，支持普通上传、压缩上传、上传视频转 GIF。</li>
+<li>图片任务处理列表，【添加水印】、【压缩上传】、【视频转码】三种操作采用非阻塞式设计，用户执行操作将会提交任务至后台执行。用户可通过定时更新的任务列表查看任务的处理进度。</li>
+</ul>
+<h3 id="_8">用户<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<ul>
+<li>友好的注册/登录页面。</li>
+<li>用户名、头像、邮箱、个性签名、注册时间的展示，关注按钮和私信按钮。</li>
+<li>全部上传图片的展示，支持对上传作品进行批量删除操作。</li>
+<li>浏览历史，采用瀑布流式加载。</li>
+<li>关注、粉丝列表，采用瀑布流式加载。</li>
+<li>友好的个人信息修改页面，支持修改头像、个性签名、密码。</li>
+</ul>
+<h3 id="_9">私信和通知<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
+<ul>
+<li>支持创建会话和发送消息，支持历史消息的瀑布流式加载。</li>
+<li>新消息支持通过 Web Notifications 进行系统通知。</li>
+<li>关注的作者上传新图片后推送通知。</li>
+</ul>
+<h2 id="_10">实现<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h2>
+<h3 id="utils"><code>utils/</code><a class="headerlink" href="#utils" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p><code>contexts.ts</code></p>
+<p>提供用户登录信息、用户头像信息的上下文管理。</p>
+<p><strong>使用 <code>creatContext</code> 定义了如下变量：</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">变量名</th>
+<th align="center">类型</th>
+<th align="center">功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><code>UserInfoContext</code></td>
+<td align="center"><code>UserInfoHandler</code></td>
+<td align="center">用户登录状态的管理</td>
+</tr>
+<tr>
+<td align="center"><code>UserAvatarContext</code></td>
+<td align="center"><code>UserAvatarHandler</code></td>
+<td align="center">用户头像信息的管理</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p><code>Network.ts</code></p>
+<p>网络请求配置和相关的功能函数。</p>
+<p><strong>变量：</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">变量名</th>
+<th align="center">类型</th>
+<th align="center">功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><code>service</code></td>
+<td align="center"><code>AxiosInstance</code></td>
+<td align="center">全局网络请求配置</td>
+</tr>
+</tbody>
+</table>
+<p><strong>函数：</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">函数名</th>
+<th align="center">返回</th>
+<th align="center">功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><code>request</code></td>
+<td align="center"><code>Promise&lt;T&gt;</code></td>
+<td align="center">生成通用网络请求</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th align="center">参数名</th>
+<th align="center">类型</th>
+<th align="center">意义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><code>url</code></td>
+<td align="center"><code>string</code></td>
+<td align="center">请求 URL</td>
+</tr>
+<tr>
+<td align="center"><code>method</code></td>
+<td align="center">HTTP method</td>
+<td align="center">请求方法</td>
+</tr>
+<tr>
+<td align="center"><code>handler</code></td>
+<td align="center"><code>UserInfoHandler</code></td>
+<td align="center">用户登录信息</td>
+</tr>
+<tr>
+<td align="center"><code>data</code></td>
+<td align="center"><code>any</code></td>
+<td align="center">请求体</td>
+</tr>
+<tr>
+<td align="center"><code>options</code></td>
+<td align="center"><code>any</code></td>
+<td align="center">请求附加选项</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p><code>request.ts</code></p>
+<p>前端用到的所有网络请求的进一步封装。</p>
+</li>
+</ul>
+<h3 id="pages"><code>pages/</code><a class="headerlink" href="#pages" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p>_app.tsx`</p>
+<p>Next.js 的 App 组件，用于跨页面的用户登录状态管理以及页面切换时保持布局的持久化。</p>
+<p><strong><code>Context.Provider</code> 组件：</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">组件名</th>
+<th align="center">功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><code>UserInfoContext.Provider</code></td>
+<td align="center">提供用户登录状态上下文</td>
+</tr>
+<tr>
+<td align="center"><code>UserAvatarContext.Provider</code></td>
+<td align="center">提供用户头像信息上下文</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p><code>_document.tsx</code></p>
+<p>自定义的 Next.js Document，定义了网页标题、图标、加载动画等。</p>
+</li>
+<li>
+<p><code>index.tsx</code></p>
+<p>主页。</p>
+</li>
+<li>
+<p><code>login.tsx</code></p>
+<p>用户登录页面。</p>
+</li>
+<li>
+<p><code>search.tsx</code></p>
+<p>搜索结果页面。</p>
+</li>
+<li>
+<p><code>task.tsx</code></p>
+<p>图片处理任务管理页面。</p>
+</li>
+<li>
+<p><code>image/</code></p>
+<ul>
+<li><code>[id].tsx</code>：图片详情页面，动态路由<code>[id]</code>对应图片 ID。</li>
+<li><code>upload.tsx</code>：图片上传页面。</li>
+</ul>
+</li>
+<li>
+<p><code>user/[id]/</code></p>
+<p>动态路由<code>[id]</code>对应用户 ID。</p>
+<ul>
+<li>
+<p><code>index.tsx</code>：用户主页。</p>
+</li>
+<li>
+<p><code>[tab].tsx</code>：</p>
+<table>
+<thead>
+<tr>
+<th align="center"><code>tab</code></th>
+<th align="center">页面</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">未提供</td>
+<td align="center">路由至 <code>user/index.tsx</code>，对应用户主页</td>
+</tr>
+<tr>
+<td align="center"><code>works</code></td>
+<td align="center">用户作品页面</td>
+</tr>
+<tr>
+<td align="center"><code>history</code></td>
+<td align="center">浏览历史页面</td>
+</tr>
+<tr>
+<td align="center"><code>settings</code></td>
+<td align="center">用户信息修改页面</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+</li>
+<li>
+<p><code>signup/</code></p>
+<ul>
+<li><code>index.tsx</code> ：用户注册页面。</li>
+<li><code>success.tsx</code>：注册成功页面，提示用户检查激活邮件。</li>
+<li><code>verify.tsx</code>：邮箱验证成功页面。</li>
+</ul>
+</li>
+<li>
+<p><code>message/</code></p>
+<ul>
+<li><code>index.tsx</code>：消息中心主页，显示会话列表和空的聊天窗口。</li>
+<li><code>[id].tsx</code>：私信页面，动态路由 <code>[id]</code> 对应聊天对象的用户 ID。</li>
+</ul>
+</li>
+</ul>
+<h3 id="components"><code>components/</code><a class="headerlink" href="#components" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p><code>carousel.tsx</code></p>
+<p>图片轮播走马灯组件。</p>
+</li>
+<li>
+<p><code>comlist.tsx</code></p>
+<p>评论区组件。</p>
+</li>
+<li>
+<p><code>dyntag.tsx</code></p>
+<p>支持动态增删的标签组件。</p>
+</li>
+<li>
+<p><code>footer.tsx</code></p>
+<p>全局页脚组件。</p>
+</li>
+<li>
+<p><code>header.tsx</code></p>
+<p>全局页眉导航栏组件。</p>
+</li>
+<li>
+<p><code>image.tsx</code></p>
+<ul>
+<li><code>ImageMetadataCard</code> ：图片信息展示卡片。</li>
+<li><code>ImageContentCard</code> ：图片内容卡片，包含分类、标题、标签的展示和点赞、下载、分享的功能按钮。</li>
+<li><code>ImagePreviewCard</code>：图片预览卡片。</li>
+<li><code>ImagePreviewListInner</code>：图片预览卡片组成的列表，用于主页、用户页、搜索结果页的多图展示。</li>
+</ul>
+</li>
+<li>
+<p><code>layout.tsx</code></p>
+<p>全局排版组件。</p>
+</li>
+<li>
+<p><code>likes.tsx</code></p>
+<p>点赞功能组件。</p>
+</li>
+<li>
+<p><code>logo.tsx</code></p>
+<p>Logo 展示组件。</p>
+</li>
+<li>
+<p><code>message.tsx</code></p>
+<p>私信消息组件。</p>
+</li>
+<li>
+<p><code>notfound.tsx</code></p>
+<p>not found 页面的显示组件。</p>
+</li>
+<li>
+<p><code>notification.tsx</code></p>
+<p>web notification 权限设置和通知组件。</p>
+</li>
+<li>
+<p><code>search.tsx</code></p>
+<ul>
+<li><code>CategorySelect</code> ：图片分类选择组件。</li>
+<li><code>SearchBox</code>：通用的搜索框组件。</li>
+<li><code>SearchFilter</code>：搜索筛选器组件。</li>
+</ul>
+</li>
+<li>
+<p><code>sider.tsx</code></p>
+<p>侧边栏组件。</p>
+</li>
+<li>
+<p><code>user.tsx</code></p>
+<ul>
+<li><code>UserAvatar</code>、<code>UserAvatarCard</code>、<code>UserAvatarBanner</code> ：用户头像及相关信息的展示组件。</li>
+<li><code>UserProfileCard</code> ：用户信息展示卡片。</li>
+<li><code>UserFollowList</code>、<code>UserFollowCard</code>：用户粉丝、关注列表组件。</li>
+<li><code>UserWorkdsCarousel</code>：用户作品轮播走马灯组件。</li>
+<li><code>UserWorksCard</code>：用户作品展示列表。</li>
+<li><code>UserHistoryCard</code>：浏览历史展示列表。</li>
+<li><code>UserProfileSettingCard</code>：用户头像、个性签名修改卡片。</li>
+<li><code>UserPasswordSettingCard</code>：用户密码修改卡片。</li>
+</ul>
+</li>
+</ul>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            回到页面顶部
+          </button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © 2023 [Nullptr]
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "content.tooltips", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.b4d07000.min.js"></script>
+      
+    
+  </body>
+</html>
