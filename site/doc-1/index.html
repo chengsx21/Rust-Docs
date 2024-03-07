@@ -25,7 +25,7 @@
     
     
       
-        <title>从 Cargo 说到基本类型 - RustDocs - 个人 Rust 学习文档</title>
+        <title>Cargo 与基本类型 - RustDocs - 个人 Rust 学习文档</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#rust-1" class="md-skip">
+        <a href="#cargo" class="md-skip">
           跳转至
         </a>
       
@@ -109,7 +109,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              从 Cargo 说到基本类型
+              Cargo 与基本类型
             
           </span>
         </div>
@@ -325,6 +325,10 @@
         
           
         
+          
+        
+          
+        
       
       
         <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
@@ -355,12 +359,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          从 Cargo 说到基本类型
+          Cargo 与基本类型
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        从 Cargo 说到基本类型
+        Cargo 与基本类型
       </a>
       
         
@@ -379,7 +383,7 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#cargo" class="md-nav__link">
+  <a href="#cargo_1" class="md-nav__link">
     认识 Cargo
   </a>
   
@@ -485,6 +489,34 @@
 
             
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../doc-5/" class="md-nav__link">
+        集合类型与生命周期
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../doc-6/" class="md-nav__link">
+        错误处理与项目结构
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -518,7 +550,7 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#cargo" class="md-nav__link">
+  <a href="#cargo_1" class="md-nav__link">
     认识 Cargo
   </a>
   
@@ -591,16 +623,17 @@
   
 
 
-<h1 id="rust-1">Rust 学习笔记 - 1<a class="headerlink" href="#rust-1" title="Permanent link">&para;</a></h1>
+<h1 id="cargo">Cargo 与基本类型<a class="headerlink" href="#cargo" title="Permanent link">&para;</a></h1>
 <hr />
-<h2 id="cargo">认识 Cargo<a class="headerlink" href="#cargo" title="Permanent link">&para;</a></h2>
+<h2 id="cargo_1">认识 Cargo<a class="headerlink" href="#cargo_1" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
 <p>包管理工具, 使任何用户拿到代码都能正常运行.</p>
 </li>
 <li>
-<p>项目分为两个类型 <code>bin</code> 和 <code>lib</code>, 前者是**可运行项目**, 后者是**依赖库项目**; 默认创建 <code>bin</code> 类型项目.</p>
-<div class="highlight"><pre><span></span><code>&gt;<span class="w"> </span>cargo<span class="w"> </span>new<span class="w"> </span>world_hello
+<p>项目分为两个类型 <code>bin</code> 和 <code>lib</code>, 前者是 <strong>可运行项目</strong>, 后者是 <strong>依赖库项目</strong>; 默认创建 <code>bin</code> 类型项目.</p>
+<div class="highlight"><pre><span></span><code>&gt;<span class="w"> </span>cargo<span class="w"> </span>new<span class="w"> </span>my-project
+&gt;<span class="w"> </span>cargo<span class="w"> </span>new<span class="w"> </span>my-lib<span class="w"> </span>--lib
 </code></pre></div>
 </li>
 <li>
@@ -627,8 +660,8 @@
 <hr />
 <h2 id="println"><code>println!</code><a class="headerlink" href="#println" title="Permanent link">&para;</a></h2>
 <ul>
-<li>原生支持 **UTF-8 编码**的字符串.</li>
-<li><strong>宏操作符</strong>, 是一种**特殊类型函数**.</li>
+<li>原生支持 <strong>UTF-8 编码</strong> 的字符串.</li>
+<li><strong>宏操作符</strong>, 是一种 <strong>特殊类型函数</strong>.</li>
 <li>自动识别输出数据的类型, 使用 <code>{}</code> 输出占位符.</li>
 <li>实现 <code>Display</code> 特征, 以使用 <code>{}</code> 方式打印结构体.</li>
 <li>
@@ -661,17 +694,17 @@
 <hr />
 <h2 id="binding">变量绑定 Binding<a class="headerlink" href="#binding" title="Permanent link">&para;</a></h2>
 <ul>
-<li>可变变量为编程提供**灵活性**, 不可变变量提供**安全性**.</li>
+<li>可变变量为编程提供 <strong>灵活性</strong>, 不可变变量提供 <strong>安全性</strong>.</li>
 <li>变量使用 <code>let</code> 关键字声明, 默认情况下是不可变的.</li>
 <li>常量使用 <code>const</code> 关键字声明, 值的类型必须标注.</li>
-<li>使用**下划线开头**或 <code>#[allow(unused_variables)]</code>, **忽略**未使用变量.</li>
-<li>使用 <code>mut</code> 声明的变量可以**修改同一内存地址的值**, 不会发生内存对象再分配, 性能更好; 使用 <code>let</code> 声明的变量**只拥有同样名称**, 涉及内存对象的再分配.</li>
+<li>使用 <strong>下划线开头</strong> 或 <code>#[allow(unused_variables)]</code>, <strong>忽略</strong> 未使用变量.</li>
+<li>使用 <code>mut</code> 声明的变量可以 <strong>修改同一内存地址的值</strong>, 不会发生内存对象再分配, 性能更好; 使用 <code>let</code> 声明的变量 <strong>只拥有同样名称</strong>, 涉及内存对象的再分配.</li>
 </ul>
 <hr />
 <h2 id="deconstruction">变量解构 Deconstruction<a class="headerlink" href="#deconstruction" title="Permanent link">&para;</a></h2>
 <ul>
-<li>使用 <code>let</code> 表达式进行**复杂变量解构**, <strong>匹配部分内容</strong>.</li>
-<li>支持使用**元组、切片和结构体模式**进行变量解构.
+<li>使用 <code>let</code> 表达式进行 <strong>复杂变量解构</strong>, <strong>匹配部分内容</strong>.</li>
+<li>支持使用 <strong>元组、切片和结构体模式</strong> 进行变量解构.
     <div class="highlight"><pre><span></span><code><span class="kd">let</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">b</span><span class="p">)</span>: <span class="p">(</span><span class="kt">bool</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">);</span>
 </code></pre></div></li>
 </ul>
@@ -679,25 +712,25 @@
 <h2 id="scalar-types">数值类型 Scalar Types<a class="headerlink" href="#scalar-types" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p>通常根据变量值和上下文**自动推导**变量类型, 某些情况需进行**手动标注**.</p>
+<p>通常根据变量值和上下文 <strong>自动推导</strong> 变量类型, 某些情况需进行 <strong>手动标注</strong>.</p>
 </li>
 <li>
-<p>允许在复杂类型上定义运算符, 被称为**运算符重载**.</p>
+<p>允许在复杂类型上定义运算符, 被称为 <strong>运算符重载</strong>.</p>
 </li>
 <li>
-<p><strong>浮点数**采用 **IEEE-754 标准</strong>, 但是没有实现 <code>std::cmp::Eq</code> 特征, 存在**精度问题**, 无法作为 <code>HashMap</code> 的 <code>Key</code> 类型.</p>
+<p><strong>浮点数</strong> 采用 <strong>IEEE-754 标准</strong>, 但是没有实现 <code>std::cmp::Eq</code> 特征, 存在 <strong>精度问题</strong>, 无法作为 <code>HashMap</code> 的 <code>Key</code> 类型.</p>
 <div class="highlight"><pre><span></span><code><span class="fm">assert!</span><span class="p">(</span><span class="mf">0.1_</span><span class="k">f32</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">0.2_</span><span class="k">f32</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mf">0.3_</span><span class="k">f32</span><span class="p">);</span>
 <span class="fm">assert!</span><span class="p">((</span><span class="mf">0.1_</span><span class="k">f64</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">0.2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">0.3</span><span class="p">).</span><span class="n">abs</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">0.001</span><span class="p">);</span>
 </code></pre></div>
 </li>
 <li>
-<p>**序列**只允许数字或字符类型; 如 <code>1..5</code> 生成 1 到 4 的连续数字, <code>1..=5</code> 生成 1 到 5 的连续数字.</p>
+<p><strong>序列</strong> 只允许数字或字符类型; 如 <code>1..5</code> 生成 1 到 4 的连续数字, <code>1..=5</code> 生成 1 到 5 的连续数字.</p>
 <div class="highlight"><pre><span></span><code><span class="fm">assert_eq!</span><span class="p">((</span><span class="mi">1</span><span class="o">..</span><span class="mi">5</span><span class="p">),</span><span class="w"> </span><span class="n">Range</span><span class="p">{</span><span class="n">start</span>: <span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">end</span>: <span class="mi">5</span><span class="p">});</span>
 <span class="fm">assert_eq!</span><span class="p">((</span><span class="mi">1</span><span class="o">..=</span><span class="mi">5</span><span class="p">),</span><span class="w"> </span><span class="n">RangeInclusive</span>::<span class="n">new</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">));</span>
 </code></pre></div>
 </li>
 <li>
-<p>**类型转换**必须是**显式进行**的.</p>
+<p><strong>类型转换</strong> 必须是 <strong>显式进行</strong> 的.</p>
 <div class="highlight"><pre><span></span><code><span class="kd">let</span><span class="w"> </span><span class="n">n</span>: <span class="kt">u16</span> <span class="o">=</span><span class="w"> </span><span class="mi">38_</span><span class="k">u8</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="kt">u16</span><span class="p">;</span>
 <span class="o">----------------------------------------------------------</span>
 <span class="k">for</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="sc">&#39;a&#39;</span><span class="o">..=</span><span class="sc">&#39;z&#39;</span><span class="w"> </span><span class="p">{</span>
@@ -706,7 +739,7 @@
 </code></pre></div>
 </li>
 <li>
-<p>可以在**数值上使用方法**.</p>
+<p>可以在 <strong>数值上使用方法</strong>.</p>
 <div class="highlight"><pre><span></span><code><span class="kd">let</span><span class="w"> </span><span class="n">w</span>: <span class="kt">f32</span> <span class="o">=</span><span class="w"> </span><span class="mf">13.14_</span><span class="k">f32</span><span class="p">.</span><span class="n">round</span><span class="p">();</span>
 </code></pre></div>
 </li>
@@ -715,7 +748,7 @@
 <h2 id="charbooleanunion-types">字符、布尔、单元类型 Char/Boolean/Union Types<a class="headerlink" href="#charbooleanunion-types" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>字符类型**支持 <code>Unicode</code> 编码, 占用内存的大小为 **4 个字节</strong>.</p>
+<p><strong>字符类型</strong> 支持 <code>Unicode</code> 编码, 占用内存的大小为 <strong>4 个字节</strong>.</p>
 <div class="highlight"><pre><span></span><code><span class="kd">let</span><span class="w"> </span><span class="n">x</span>: <span class="kt">char</span> <span class="o">=</span><span class="w"> </span><span class="sc">&#39;中&#39;</span><span class="p">;</span>
 <span class="fm">println!</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">std</span>::<span class="n">mem</span>::<span class="n">size_of_val</span><span class="p">(</span><span class="o">&amp;</span><span class="n">x</span><span class="p">));</span>
 <span class="o">----------------------------------------------------------</span>
@@ -729,13 +762,13 @@
 <p>布尔类型值为 <code>true</code> 和 <code>false</code>, 占用内存的大小为 1 个字节.</p>
 </li>
 <li>
-<p><strong>单元类型**作为 <code>main</code> 函数、<code>println!</code> 宏等的返回值或 <code>map</code> 的值 (此时 <code>map</code> 相当于 <code>set</code>), 表示**不分配任何内存</strong>, 只用来**占位**.</p>
+<p><strong>单元类型</strong> 作为 <code>main</code> 函数、<code>println!</code> 宏等的返回值或 <code>map</code> 的值 (此时 <code>map</code> 相当于 <code>set</code>), 表示 <strong>不分配任何内存</strong>, 只用来 <strong>占位</strong>.</p>
 <div class="highlight"><pre><span></span><code><span class="kd">let</span><span class="w"> </span><span class="n">unit</span>: <span class="p">()</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">();</span>
 <span class="fm">println!</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">std</span>::<span class="n">mem</span>::<span class="n">size_of_val</span><span class="p">(</span><span class="o">&amp;</span><span class="n">unit</span><span class="p">));</span>
 </code></pre></div>
 </li>
 <li>
-<p>单元类型便于**统一有返回值和无返回值的函数**, 以便将函数当做对象使用.</p>
+<p>单元类型便于 <strong>统一有返回值和无返回值的函数</strong>, 以便将函数当做对象使用.</p>
 </li>
 </ul>
 <hr />
@@ -757,23 +790,23 @@
 </code></pre></div>
 </li>
 <li>
-<p>调用**函数、宏**是**表达式**, 会进行求值并返回值, 或隐式返回一个单元类型.</p>
+<p>调用 <strong>函数、宏</strong> 是 <strong>表达式</strong>, 会进行求值并返回值, 或隐式返回一个单元类型.</p>
 <div class="highlight"><pre><span></span><code><span class="c1">// `{}` 是一个块作用域, 没有返回值, 因此隐式地返回 `()`</span>
 <span class="fm">assert_eq!</span><span class="p">((),</span><span class="w"> </span><span class="p">{});</span>
 </code></pre></div>
 </li>
 <li>
-<p>**基于表达式**是**函数式语言**的重要特征.</p>
+<p><strong>基于表达式</strong> 是 <strong>函数式语言</strong> 的重要特征.</p>
 </li>
 </ul>
 <hr />
 <h2 id="function">函数 Function<a class="headerlink" href="#function" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>Rust</strong> 是**强类型语言**, 需要为函数参数都标识出具体类型.</p>
+<p><strong>Rust</strong> 是 <strong>强类型语言</strong>, 需要为函数参数都标识出具体类型.</p>
 </li>
 <li>
-<p><strong>函数是表达式</strong>, 返回值是函数体最后一条表达式, 可以**使用 <code>return</code> 提前返回**.</p>
+<p><strong>函数是表达式</strong>, 返回值是函数体最后一条表达式, 可以 <strong>使用 <code>return</code> 提前返回</strong>.</p>
 <div class="highlight"><pre><span></span><code><span class="k">fn</span> <span class="nf">plus_or_minus</span><span class="p">(</span><span class="n">x</span>:<span class="kt">i32</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">i32</span> <span class="p">{</span>
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span>
@@ -794,7 +827,7 @@
 </code></pre></div>
 </li>
 <li>
-<p>用 <code>!</code> 作函数返回类型, 表示函数**永不返回**, 称为**发散函数**.</p>
+<p>用 <code>!</code> 作函数返回类型, 表示函数 <strong>永不返回</strong>, 称为 <strong>发散函数</strong>.</p>
 <div class="highlight"><pre><span></span><code><span class="k">fn</span> <span class="nf">dead_end</span><span class="p">()</span><span class="w"> </span>-&gt; <span class="o">!</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="fm">panic!</span><span class="p">(</span><span class="s">&quot;崩溃吧&quot;</span><span class="p">);</span>
 <span class="p">}</span>
@@ -808,7 +841,7 @@
 </code></pre></div>
 </li>
 <li>
-<p>发散函数也可以**用于 <code>match</code> 表达式匹配**, 替代任何类型的值.</p>
+<p>发散函数也可以 <strong>用于 <code>match</code> 表达式匹配</strong>, 替代任何类型的值.</p>
 <div class="highlight"><pre><span></span><code><span class="kd">let</span><span class="w"> </span><span class="n">_v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">match</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="kc">true</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
 <span class="w">    </span><span class="kc">false</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span>

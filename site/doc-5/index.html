@@ -1,0 +1,960 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="关于 RustDocs - 个人 Rust 学习的说明文档">
+      
+      
+        <meta name="author" content="程思翔">
+      
+      
+        <link rel="canonical" href="https://chengsx21.github.io/Rust-Docs/doc-5/">
+      
+      
+        <link rel="prev" href="../doc-4/">
+      
+      
+        <link rel="next" href="../doc-6/">
+      
+      <link rel="icon" href="../images/logo.svg">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.14">
+    
+    
+      
+        <title>集合类型与生命周期 - RustDocs - 个人 Rust 学习文档</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.85bb2934.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.a6bdf11c.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="light-blue" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="RustDocs - 个人 Rust 学习文档" class="md-header__button md-logo" aria-label="RustDocs - 个人 Rust 学习文档" data-md-component="logo">
+      
+  <img src="../images/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            RustDocs - 个人 Rust 学习文档
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              集合类型与生命周期
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+          
+            
+            
+            
+            <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="light-blue" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+            
+              <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>
+              </label>
+            
+          
+            
+            
+            
+            <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+            
+              <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>
+              </label>
+            
+          
+        </form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/chengsx21/Rust-Docs" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    chengsx21/Rust-Docs
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href=".." class="md-tabs__link">
+      概述
+    </a>
+  </li>
+
+      
+        
+  
+  
+    
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../doc-1/" class="md-tabs__link md-tabs__link--active">
+        学习笔记
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="RustDocs - 个人 Rust 学习文档" class="md-nav__button md-logo" aria-label="RustDocs - 个人 Rust 学习文档" data-md-component="logo">
+      
+  <img src="../images/logo.svg" alt="logo">
+
+    </a>
+    RustDocs - 个人 Rust 学习文档
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/chengsx21/Rust-Docs" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    chengsx21/Rust-Docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        概述
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+      
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          学习笔记
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          学习笔记
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../doc-1/" class="md-nav__link">
+        Cargo 与基本类型
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../doc-2/" class="md-nav__link">
+        所有权与进阶类型
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../doc-3/" class="md-nav__link">
+        结构体与模式匹配
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../doc-4/" class="md-nav__link">
+        泛型与特征
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          集合类型与生命周期
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        集合类型与生命周期
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#vector" class="md-nav__link">
+    动态数组 Vector
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hashmap" class="md-nav__link">
+    哈希映射 HashMap
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lifetime" class="md-nav__link">
+    生命周期 Lifetime
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../doc-6/" class="md-nav__link">
+        错误处理与项目结构
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#vector" class="md-nav__link">
+    动态数组 Vector
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hashmap" class="md-nav__link">
+    哈希映射 HashMap
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lifetime" class="md-nav__link">
+    生命周期 Lifetime
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="_1">集合类型与生命周期<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<hr />
+<h2 id="vector">动态数组 Vector<a class="headerlink" href="#vector" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p><strong>创建动态数组</strong> 可以使用关联方法 <code>Vec::new()</code>, <code>Vec::with_capacity()</code> 或宏 <code>vec!</code>.</p>
+</li>
+<li>
+<p><strong>向动态数组尾部添加元素</strong> 可以使用 <code>push</code> 方法.</p>
+<div class="highlight"><pre><span></span><code><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Vec</span>::<span class="n">new</span><span class="p">();</span>
+<span class="n">v</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+
+<span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Vec</span>::<span class="n">with_capacity</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span>
+
+<span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="fm">vec!</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">];</span>
+</code></pre></div>
+</li>
+<li>
+<p><strong>从动态数组中读取元素</strong> 可以使用下标索引访问或 <code>get</code> 方法.</p>
+<div class="highlight"><pre><span></span><code><span class="kd">let</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="fm">vec!</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">];</span>
+<span class="c1">// 防止越界访问, 返回 Option&lt;&amp;T&gt;</span>
+<span class="k">match</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nb">Some</span><span class="p">(</span><span class="n">third</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;第三个元素是 {third}&quot;</span><span class="p">),</span>
+<span class="w">    </span><span class="nb">None</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;去你的第三个元素&quot;</span><span class="p">),</span>
+<span class="p">}</span>
+</code></pre></div>
+</li>
+<li>
+<p><strong>借用动态数组元素</strong> 时不能 <strong>进行元素插入</strong>, 否则当 <strong>旧数组大小不够</strong> 时, 会 <strong>重新分配</strong> 一块更大的内存空间, 之前的引用会 <strong>指向一块无效内存</strong>.</p>
+<div class="highlight"><pre><span></span><code><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="fm">vec!</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">];</span>
+<span class="kd">let</span><span class="w"> </span><span class="n">first</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<span class="n">v</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="mi">6</span><span class="p">);</span>
+<span class="c1">// println!(&quot;The first element is: {first}&quot;); ERROR!</span>
+</code></pre></div>
+</li>
+<li>
+<p><strong>动态数组的常用方法</strong> 如下.</p>
+<div class="highlight"><pre><span></span><code><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Vec</span>::<span class="n">with_capacity</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+<span class="n">v</span><span class="p">.</span><span class="n">extend</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">]);</span><span class="w"> </span><span class="c1">// 附加数据</span>
+<span class="fm">println!</span><span class="p">(</span><span class="s">&quot;长度:{}, 容量:{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">len</span><span class="p">(),</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">capacity</span><span class="p">());</span>
+<span class="n">v</span><span class="p">.</span><span class="n">reserve</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span><span class="w"> </span><span class="c1">// 调整容量</span>
+<span class="n">v</span><span class="p">.</span><span class="n">shrink_to_fit</span><span class="p">();</span><span class="w"> </span><span class="c1">// 释放剩余容量</span>
+<span class="o">------------------------------------------------------</span>
+<span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="fm">vec!</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">];</span>
+<span class="fm">assert!</span><span class="p">(</span><span class="o">!</span><span class="n">v</span><span class="p">.</span><span class="n">is_empty</span><span class="p">());</span><span class="w"> </span><span class="c1">// 检查是否为空</span>
+<span class="n">v</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">);</span><span class="w"> </span><span class="c1">// 指定索引插入数据</span>
+<span class="fm">assert_eq!</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">remove</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span><span class="w"> </span><span class="c1">// 移除指定位置元素并返回</span>
+<span class="fm">assert_eq!</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">pop</span><span class="p">(),</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="mi">3</span><span class="p">));</span><span class="w"> </span><span class="c1">// 删除并返回尾部元素</span>
+<span class="fm">assert_eq!</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">pop</span><span class="p">(),</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span><span class="w"> </span>
+<span class="fm">assert_eq!</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">pop</span><span class="p">(),</span><span class="w"> </span><span class="nb">None</span><span class="p">);</span>
+<span class="n">v</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span><span class="w"> </span><span class="c1">// 清空</span>
+
+<span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">v1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">11</span><span class="p">,</span><span class="w"> </span><span class="mi">22</span><span class="p">].</span><span class="n">to_vec</span><span class="p">();</span>
+<span class="n">v</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="n">v1</span><span class="p">);</span><span class="w"> </span><span class="c1">// 清空 v1, 所有元素附加到 v 中</span>
+<span class="n">v</span><span class="p">.</span><span class="n">truncate</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"> </span><span class="c1">// 截断到指定长度</span>
+<span class="n">v</span><span class="p">.</span><span class="n">retain</span><span class="p">(</span><span class="o">|</span><span class="n">x</span><span class="o">|</span><span class="w"> </span><span class="o">*</span><span class="n">x</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">10</span><span class="p">);</span><span class="w"> </span><span class="c1">// 保留满足条件元素</span>
+<span class="o">------------------------------------------------------</span>
+<span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="fm">vec!</span><span class="p">[</span><span class="mi">11</span><span class="p">,</span><span class="w"> </span><span class="mi">22</span><span class="p">,</span><span class="w"> </span><span class="mi">33</span><span class="p">,</span><span class="w"> </span><span class="mi">44</span><span class="p">,</span><span class="w"> </span><span class="mi">55</span><span class="p">];</span>
+<span class="c1">// 删除指定范围的元素, 获取被删除元素的迭代器</span>
+<span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">m</span>: <span class="nb">Vec</span><span class="o">&lt;</span><span class="n">_</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">drain</span><span class="p">(</span><span class="mi">1</span><span class="o">..=</span><span class="mi">3</span><span class="p">).</span><span class="n">collect</span><span class="p">();</span><span class="w">    </span>
+<span class="kd">let</span><span class="w"> </span><span class="n">v1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">m</span><span class="p">.</span><span class="n">split_off</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"> </span><span class="c1">// 指定索引处切分</span>
+</code></pre></div>
+</li>
+<li>
+<p><strong>动态数组排序算法</strong> 分为稳定排序 <code>sort</code> 和 <code>sort_by</code>, 以及非稳定排序 <code>sort_unstable</code> 和 <code>sort_unstable_by</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">vec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="fm">vec!</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">15</span><span class="p">];</span>
+<span class="n">vec</span><span class="p">.</span><span class="n">sort_unstable</span><span class="p">();</span>
+<span class="o">------------------------------------------------------</span>
+<span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">vec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="fm">vec!</span><span class="p">[</span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">5.6</span><span class="p">,</span><span class="w"> </span><span class="mf">10.3</span><span class="p">,</span><span class="w"> </span><span class="mf">2.0</span><span class="p">,</span><span class="w"> </span><span class="mi">15</span><span class="k">f32</span><span class="p">];</span><span class="w">    </span>
+<span class="n">vec</span><span class="p">.</span><span class="n">sort_unstable_by</span><span class="p">(</span><span class="o">|</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="o">|</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">partial_cmp</span><span class="p">(</span><span class="n">b</span><span class="p">).</span><span class="n">unwrap</span><span class="p">());</span>
+</code></pre></div>
+</li>
+<li>
+<p><strong>浮点数</strong> 中存在 <code>NAN</code>, 没有实现 <strong>全可比较特性</strong> <code>Ord</code>, 而实现了 <strong>部分可比较特性</strong> <code>PartialOrd</code>; <strong>实现 <code>Ord</code> 特性</strong> 需要实现 <code>Ord</code>, <code>Eq</code>, <code>PartialEq</code>, <code>PartialOrd</code>.</p>
+</li>
+<li>
+<p>为动态数组 <strong>实现 <code>From&lt;T&gt;</code> 特征</strong>, 那么 <code>T</code> 就可以被 <strong>转换成 <code>Vec</code></strong>.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// impl From&lt;[T; N]&gt; for Vec</span>
+<span class="kd">let</span><span class="w"> </span><span class="n">arr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">];</span>
+<span class="kd">let</span><span class="w"> </span><span class="n">v1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Vec</span>::<span class="n">from</span><span class="p">(</span><span class="n">arr</span><span class="p">);</span>
+<span class="kd">let</span><span class="w"> </span><span class="n">v2</span>: <span class="nb">Vec</span><span class="o">&lt;</span><span class="kt">i32</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">arr</span><span class="p">.</span><span class="n">to_vec</span><span class="p">();</span>
+<span class="fm">assert_eq!</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span><span class="w"> </span><span class="n">v2</span><span class="p">);</span>
+<span class="o">------------------------------------------------------</span>
+<span class="c1">// impl From&lt;String&gt; for Vec</span>
+<span class="kd">let</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;hello&quot;</span><span class="p">.</span><span class="n">to_string</span><span class="p">();</span>
+<span class="kd">let</span><span class="w"> </span><span class="n">v1</span>: <span class="nb">Vec</span><span class="o">&lt;</span><span class="kt">u8</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">into</span><span class="p">();</span>
+
+<span class="kd">let</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;hello&quot;</span><span class="p">.</span><span class="n">to_string</span><span class="p">();</span>
+<span class="kd">let</span><span class="w"> </span><span class="n">v2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">into_bytes</span><span class="p">();</span>
+<span class="fm">assert_eq!</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span><span class="w"> </span><span class="n">v2</span><span class="p">);</span>
+<span class="o">------------------------------------------------------</span>
+<span class="c1">// impl&lt;&#39;_&gt; From&lt;&amp;&#39;_ str&gt; for Vec</span>
+<span class="kd">let</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;hello&quot;</span><span class="p">;</span>
+<span class="kd">let</span><span class="w"> </span><span class="n">v3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Vec</span>::<span class="n">from</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
+<span class="fm">assert_eq!</span><span class="p">(</span><span class="n">v2</span><span class="p">,</span><span class="w"> </span><span class="n">v3</span><span class="p">);</span>
+<span class="o">------------------------------------------------------</span>
+<span class="c1">// Iterators 可以通过 collect 变成 Vec</span>
+<span class="kd">let</span><span class="w"> </span><span class="n">v4</span>: <span class="nb">Vec</span><span class="o">&lt;</span><span class="kt">i32</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="mi">10</span><span class="p">].</span><span class="n">into_iter</span><span class="p">().</span><span class="n">collect</span><span class="p">();</span>
+<span class="fm">assert_eq!</span><span class="p">(</span><span class="n">v4</span><span class="p">,</span><span class="w"> </span><span class="fm">vec!</span><span class="p">[</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="mi">10</span><span class="p">]);</span>
+</code></pre></div>
+</li>
+<li>
+<p><strong><code>&amp;[T]</code> 切片和 <code>&amp;Vec&lt;T&gt;</code></strong> 是不同的类型, 后者仅仅是 <strong><code>Vec</code> 的引用</strong> 并可以通过 <strong>解引用直接获取 <code>Vec</code></strong>.</p>
+</li>
+</ul>
+<hr />
+<h2 id="hashmap">哈希映射 HashMap<a class="headerlink" href="#hashmap" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p><strong>创建 HashMap</strong> 可使用关联方法 <code>HashMap::new()</code>, <code>HashMap::from()</code>, <code>HashMap::with_capacity()</code> 或 <code>collect</code> 方法.</p>
+<div class="highlight"><pre><span></span><code><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">collections</span>::<span class="n">HashMap</span><span class="p">;</span>
+<span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">my_gems</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HashMap</span>::<span class="n">new</span><span class="p">();</span>
+<span class="n">my_gems</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="s">&quot;红宝石&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="n">my_gems</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="s">&quot;河边捡的误以为是宝石的破石头&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">18</span><span class="p">);</span>
+<span class="o">------------------------------------------------------</span>
+<span class="kd">let</span><span class="w"> </span><span class="n">teams</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">(</span><span class="s">&quot;Chinese Team&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="s">&quot;American Team&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="s">&quot;France Team&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">50</span><span class="p">),</span>
+<span class="p">];</span>
+<span class="c1">// collect 方法在内部支持多种类型的目标集合, 需要进行类型标注</span>
+<span class="kd">let</span><span class="w"> </span><span class="n">map1</span>: <span class="nc">HashMap</span><span class="o">&lt;</span><span class="n">_</span><span class="p">,</span><span class="n">_</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">team_list</span><span class="p">.</span><span class="n">into_iter</span><span class="p">().</span><span class="n">collect</span><span class="p">();</span>
+
+<span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">map2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HashMap</span>::<span class="n">new</span><span class="p">();</span>
+<span class="k">for</span><span class="w"> </span><span class="n">team</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="o">&amp;</span><span class="n">teams</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">map2</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">team</span><span class="p">.</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">team</span><span class="p">.</span><span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">let</span><span class="w"> </span><span class="n">map3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HashMap</span>::<span class="n">from</span><span class="p">(</span><span class="n">teams</span><span class="p">);</span>
+</code></pre></div>
+</li>
+<li>
+<p><strong>集合类型</strong> 都是 <strong>动态、没有固定的内存大小</strong> 的, 底层数据 <strong>存储在堆上</strong>, 通过 <strong>存储在栈中的引用类型</strong> 来访问.</p>
+</li>
+<li>
+<p><strong><code>HashMap</code> 的所有权规则</strong>:</p>
+<ul>
+<li>实现 <code>Copy</code> 特征 (如 <code>&amp;str</code>), 复制进 <code>HashMap</code>, 所有权不发生转移;</li>
+<li>未实现 <code>Copy</code> 特征 (如 <code>String</code>), 所有权转移给 <code>HashMap</code> 中.</li>
+</ul>
+</li>
+<li>
+<p><strong>引用类型</strong> 放入 HashMap 中, 需要确保该引用的 <strong>生命周期至少一样久</strong>.</p>
+<div class="highlight"><pre><span></span><code><span class="kd">let</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">String</span>::<span class="n">from</span><span class="p">(</span><span class="s">&quot;Sunface&quot;</span><span class="p">);</span>
+<span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">handsome_boys</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HashMap</span>::<span class="n">new</span><span class="p">();</span>
+<span class="n">handsome_boys</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="o">&amp;</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="mi">18</span><span class="p">);</span>
+<span class="n">std</span>::<span class="n">mem</span>::<span class="nb">drop</span><span class="p">(</span><span class="n">name</span><span class="p">);</span>
+<span class="c1">// println!(&quot;{:?}已经被除名&quot;, handsome_boys); ERROR!</span>
+</code></pre></div>
+</li>
+<li>
+<p><strong>从 HashMap 读取元素</strong> 使用 <code>get</code> 方法, 返回 <code>Option&lt;&amp;T&gt;</code>; 或使用下标索引.</p>
+<div class="highlight"><pre><span></span><code><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">scores</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HashMap</span>::<span class="n">new</span><span class="p">();</span>
+<span class="n">scores</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="nb">String</span>::<span class="n">from</span><span class="p">(</span><span class="s">&quot;Blue&quot;</span><span class="p">),</span><span class="w"> </span><span class="mi">10</span><span class="p">);</span>
+<span class="n">scores</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="nb">String</span>::<span class="n">from</span><span class="p">(</span><span class="s">&quot;Yellow&quot;</span><span class="p">),</span><span class="w"> </span><span class="mi">50</span><span class="p">);</span>
+
+<span class="kd">let</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">String</span>::<span class="n">from</span><span class="p">(</span><span class="s">&quot;Blue&quot;</span><span class="p">);</span>
+<span class="kd">let</span><span class="w"> </span><span class="n">score</span>: <span class="nb">Option</span><span class="o">&lt;&amp;</span><span class="kt">i32</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">scores</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="o">&amp;</span><span class="n">name</span><span class="p">);</span>
+<span class="kd">let</span><span class="w"> </span><span class="n">score_</span>: <span class="kt">i32</span> <span class="o">=</span><span class="w"> </span><span class="n">scores</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="o">&amp;</span><span class="n">name</span><span class="p">).</span><span class="n">copied</span><span class="p">().</span><span class="n">unwrap_or</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</code></pre></div>
+</li>
+<li>
+<p><strong>从 HashMap 中循环遍历</strong> <code>Key</code>, <code>Value</code> 对.</p>
+<div class="highlight"><pre><span></span><code><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">collections</span>::<span class="n">HashMap</span><span class="p">;</span>
+
+<span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">scores</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HashMap</span>::<span class="n">new</span><span class="p">();</span>
+<span class="n">scores</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="nb">String</span>::<span class="n">from</span><span class="p">(</span><span class="s">&quot;Blue&quot;</span><span class="p">),</span><span class="w"> </span><span class="mi">10</span><span class="p">);</span>
+<span class="n">scores</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="nb">String</span>::<span class="n">from</span><span class="p">(</span><span class="s">&quot;Yellow&quot;</span><span class="p">),</span><span class="w"> </span><span class="mi">50</span><span class="p">);</span>
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="o">&amp;</span><span class="n">scores</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;{}: {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+</li>
+<li>
+<p><strong>更新 HashMap</strong> 的方法如下.</p>
+<div class="highlight"><pre><span></span><code><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">scores</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HashMap</span>::<span class="n">new</span><span class="p">();</span>
+<span class="n">scores</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="s">&quot;Blue&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">);</span>
+
+<span class="c1">// 覆盖已有的值</span>
+<span class="kd">let</span><span class="w"> </span><span class="n">old</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">scores</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="s">&quot;Blue&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">20</span><span class="p">);</span>
+<span class="fm">assert_eq!</span><span class="p">(</span><span class="n">old</span><span class="p">,</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="mi">10</span><span class="p">));</span>
+
+<span class="c1">// 查询新插入的值</span>
+<span class="kd">let</span><span class="w"> </span><span class="n">new</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">scores</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;Blue&quot;</span><span class="p">);</span>
+<span class="fm">assert_eq!</span><span class="p">(</span><span class="n">new</span><span class="p">,</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="o">&amp;</span><span class="mi">20</span><span class="p">));</span>
+
+<span class="c1">// 查询对应的值, 若不存在则插入新值</span>
+<span class="c1">// or_insert 返回 &amp;mut v 引用</span>
+<span class="kd">let</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">scores</span><span class="p">.</span><span class="n">entry</span><span class="p">(</span><span class="s">&quot;Yellow&quot;</span><span class="p">).</span><span class="n">or_insert</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+<span class="fm">assert_eq!</span><span class="p">(</span><span class="o">*</span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">);</span>
+<span class="kd">let</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">scores</span><span class="p">.</span><span class="n">entry</span><span class="p">(</span><span class="s">&quot;Yellow&quot;</span><span class="p">).</span><span class="n">or_insert</span><span class="p">(</span><span class="mi">50</span><span class="p">);</span>
+<span class="fm">assert_eq!</span><span class="p">(</span><span class="o">*</span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">);</span>
+</code></pre></div>
+</li>
+<li>
+<p><strong>类型作为 <code>Key</code></strong> 的关键是 <strong>能否进行相等比较</strong> (实现 <strong><code>std::cmp::Eq</code> 特征</strong>).</p>
+<ul>
+<li><strong>浮点数</strong> 不可以用作 <code>HashMap</code> 的 <code>Key</code>.</li>
+<li><strong>结构体</strong> 作为 <code>HashMap</code> 的 <code>Key</code> 需要实现 <code>PartialEq</code>, <code>Eq</code>, <code>Hash</code> 特征.</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="lifetime">生命周期 Lifetime<a class="headerlink" href="#lifetime" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p><strong>生命周期</strong> 就是 <strong>引用的有效作用域</strong>, 主要作用是 <strong>避免悬垂引用</strong>.</p>
+</li>
+<li>
+<p>Rust 使用 <strong>借用检查器</strong> 来检查 <strong>借用正确性</strong>.</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">r</span><span class="p">;</span><span class="w">                </span><span class="c1">// ---------+-- &#39;a</span>
+<span class="w">    </span><span class="p">{</span><span class="w">                     </span><span class="c1">//          |</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span><span class="w">        </span><span class="c1">// -+-- &#39;b  |</span>
+<span class="w">        </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">x</span><span class="p">;</span><span class="w">           </span><span class="c1">//  |       |</span>
+<span class="w">    </span><span class="p">}</span><span class="w">                     </span><span class="c1">// -+       |</span>
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;r: {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">r</span><span class="p">);</span><span class="w"> </span><span class="c1">//          |</span>
+<span class="p">}</span><span class="w">                         </span><span class="c1">// ---------+</span>
+</code></pre></div>
+</li>
+<li>
+<p>函数的返回值为引用时, 编译器需要知道 <strong>引用的具体对象</strong>, 确保 <strong>调用后的引用生命周期分析</strong>; 生命周期 <strong>标注</strong> 并 <strong>不会改变引用的实际作用域</strong>.</p>
+<div class="highlight"><pre><span></span><code><span class="o">&amp;</span><span class="kt">i32</span><span class="w">         </span><span class="c1">// 一个引用</span>
+<span class="o">&amp;&#39;</span><span class="na">a</span><span class="w"> </span><span class="kt">i32</span><span class="w">      </span><span class="c1">// 具有显式生命周期的引用</span>
+<span class="o">&amp;&#39;</span><span class="na">a</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="kt">i32</span><span class="w">  </span><span class="c1">// 具有显式生命周期的可变引用</span>
+</code></pre></div>
+</li>
+<li>
+<p>通过 <strong>函数签名</strong> 指定 <strong>生命周期参数</strong> 时, 并 <strong>没有改变</strong> 传入引用或者返回引用的 <strong>真实生命周期</strong>, 而是告诉 <strong>编译器</strong> 当不满足约束条件时 <strong>拒绝编译通过</strong>.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// 生命周期标注说明参数和返回值至少和 &#39;a 活得一样久</span>
+<span class="c1">// 返回值的生命周期是参数中作用域较小的那个</span>
+<span class="k">fn</span> <span class="nf">longest</span><span class="o">&lt;&#39;</span><span class="na">a</span><span class="o">&gt;</span><span class="p">(</span><span class="n">x</span>: <span class="kp">&amp;</span><span class="o">&#39;</span><span class="na">a</span> <span class="kt">str</span><span class="p">,</span><span class="w"> </span><span class="n">y</span>: <span class="kp">&amp;</span><span class="o">&#39;</span><span class="na">a</span> <span class="kt">str</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kp">&amp;</span><span class="o">&#39;</span><span class="na">a</span> <span class="kt">str</span> <span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">x</span><span class="p">.</span><span class="n">len</span><span class="p">()</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">y</span><span class="p">.</span><span class="n">len</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">x</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">y</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</li>
+<li>
+<p>如果函数 <strong>返回引用类型</strong>, 其生命周期来源于 <strong>参数</strong> 或 <strong>函数体中某新建引用(悬垂)</strong>.</p>
+</li>
+<li>
+<p><strong>结构体使用引用</strong>, 需要为 <strong>每个引用标注生命周期</strong>, <strong>每个引用</strong> 需要 <strong>比结构体活得久</strong>.</p>
+<div class="highlight"><pre><span></span><code><span class="k">struct</span> <span class="nc">NoCopyType</span><span class="w"> </span><span class="p">{}</span>
+<span class="k">struct</span> <span class="nc">Example</span><span class="o">&lt;&#39;</span><span class="na">a</span><span class="p">,</span><span class="w"> </span><span class="o">&#39;</span><span class="na">b</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">a</span>: <span class="kp">&amp;</span><span class="o">&#39;</span><span class="na">a</span> <span class="kt">u32</span><span class="p">,</span>
+<span class="w">    </span><span class="n">b</span>: <span class="kp">&amp;</span><span class="o">&#39;</span><span class="na">b</span> <span class="nc">NoCopyType</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">fix_me</span><span class="o">&lt;&#39;</span><span class="na">a</span><span class="o">&gt;</span><span class="p">(</span><span class="n">foo</span>: <span class="kp">&amp;</span><span class="nc">Example</span><span class="o">&lt;&#39;</span><span class="nb">_</span><span class="p">,</span><span class="w"> </span><span class="o">&#39;</span><span class="na">a</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kp">&amp;</span><span class="o">&#39;</span><span class="na">a</span> <span class="nc">NoCopyType</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">foo</span><span class="p">.</span><span class="n">b</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">no_copy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NoCopyType</span><span class="w"> </span><span class="p">{};</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">example</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Example</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">a</span>: <span class="kp">&amp;</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">b</span>: <span class="kp">&amp;</span><span class="nc">no_copy</span><span class="w"> </span><span class="p">};</span>
+<span class="w">    </span><span class="n">fix_me</span><span class="p">(</span><span class="o">&amp;</span><span class="n">example</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+</li>
+<li>
+<p>函数或方法中, 参数的生命周期称为 <strong><code>输入生命周期</code></strong>, 返回值的生命周期称为 <strong><code>输出生命周期</code></strong>. 介绍 <strong>生命周期消除规则</strong> (编译器发现三条规则都不适用就会报错):</p>
+<ul>
+<li>每个 <strong>引用参数</strong> 都会获得 <strong>独自的生命周期</strong>.</li>
+<li><strong>只有一个输入生命周期</strong>, 那么该生命周期会被 <strong>赋给所有输出生命周期</strong>.</li>
+<li><strong>存在多个输入生命周期</strong>, 其中一个是 <strong><code>&amp;self</code> 或 <code>&amp;mut self</code></strong>, 则 <code>&amp;self</code> 的生命周期被 <strong>赋给所有输出生命周期</strong>.</li>
+</ul>
+</li>
+<li>
+<p>为具有生命周期的结构体 <strong>实现方法</strong>, 语法和 <strong>泛型参数语法</strong> 很相似.</p>
+<div class="highlight"><pre><span></span><code><span class="k">struct</span> <span class="nc">ImportantExcerpt</span><span class="o">&lt;&#39;</span><span class="na">a</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">part</span>: <span class="kp">&amp;</span><span class="o">&#39;</span><span class="na">a</span> <span class="kt">str</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1">// 生命周期标注也是结构体类型的一部分</span>
+<span class="k">impl</span><span class="o">&lt;&#39;</span><span class="na">a</span><span class="o">&gt;</span><span class="w"> </span><span class="n">ImportantExcerpt</span><span class="o">&lt;&#39;</span><span class="na">a</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// 方法签名往往无需标注生命周期, 得益于第一和第三消除规则</span>
+<span class="w">    </span><span class="k">fn</span> <span class="nf">level</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">i32</span> <span class="p">{</span>
+<span class="w">        </span><span class="mi">3</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</li>
+<li>
+<p><strong>生命周期约束语法</strong> 跟泛型约束相似, 用于说明 <code>'a</code> 必须比 <code>'b</code> 活得久.</p>
+<div class="highlight"><pre><span></span><code><span class="k">impl</span><span class="o">&lt;&#39;</span><span class="na">a</span>: <span class="o">&#39;</span><span class="na">b</span><span class="p">,</span><span class="w"> </span><span class="o">&#39;</span><span class="na">b</span><span class="o">&gt;</span><span class="w"> </span><span class="n">ImportantExcerpt</span><span class="o">&lt;&#39;</span><span class="na">a</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">fn</span> <span class="nf">rtn_part</span><span class="p">(</span><span class="o">&amp;&#39;</span><span class="na">a</span><span class="w"> </span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">announcement</span>: <span class="kp">&amp;</span><span class="o">&#39;</span><span class="na">b</span> <span class="kt">str</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kp">&amp;</span><span class="o">&#39;</span><span class="na">b</span> <span class="kt">str</span> <span class="p">{</span>
+<span class="w">        </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;Attention please: {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">announcement</span><span class="p">);</span>
+<span class="w">        </span><span class="bp">self</span><span class="p">.</span><span class="n">part</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</li>
+<li>
+<p><strong><code>'static</code> 生命周期</strong> 表示和程序活得一样久 (<strong>硬编码字符串字面量</strong> 和 <strong>特征对象</strong>).</p>
+<div class="highlight"><pre><span></span><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">result</span><span class="p">;</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// 写法一 ×</span>
+<span class="w">        </span><span class="c1">// 字符串在 `}` 结束后 drop 了, 引用失效</span>
+<span class="w">        </span><span class="c1">// let s1 = String::from(&quot;a&quot;);</span>
+<span class="w">        </span><span class="c1">// let s2 = String::from(&quot;abc&quot;);</span>
+<span class="w">        </span><span class="c1">// result = longest(s1.as_str(), s2.as_str());</span>
+
+<span class="w">        </span><span class="c1">// 写法二 √</span>
+<span class="w">        </span><span class="c1">// 字符串字面量本身的生命周期是 `&#39;static`</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">s1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;abc&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">s2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;a&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">longest</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span><span class="w"> </span><span class="n">s2</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;result: {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">result</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+</li>
+<li>
+<p>综合运用实例: 实现一个 <strong>简单的字节缓冲区</strong>.</p>
+<div class="highlight"><pre><span></span><code><span class="k">struct</span> <span class="nc">Buffer</span><span class="o">&lt;&#39;</span><span class="na">a</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">buf</span>: <span class="kp">&amp;</span><span class="o">&#39;</span><span class="na">a</span> <span class="p">[</span><span class="kt">u8</span><span class="p">],</span>
+<span class="w">    </span><span class="n">pos</span>: <span class="kt">usize</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">impl</span><span class="o">&lt;&#39;</span><span class="na">b</span><span class="p">,</span><span class="w"> </span><span class="o">&#39;</span><span class="na">a</span>: <span class="o">&#39;</span><span class="na">b</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Buffer</span><span class="o">&lt;&#39;</span><span class="na">a</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">fn</span> <span class="nf">new</span><span class="p">(</span><span class="n">b</span>: <span class="kp">&amp;</span><span class="o">&#39;</span><span class="na">a</span> <span class="p">[</span><span class="kt">u8</span><span class="p">])</span><span class="w"> </span>-&gt; <span class="nc">Buffer</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Buffer</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">buf</span>: <span class="nc">b</span><span class="p">,</span>
+<span class="w">            </span><span class="n">pos</span>: <span class="mi">0</span><span class="p">,</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">fn</span> <span class="nf">read_bytes</span><span class="p">(</span><span class="o">&amp;&#39;</span><span class="na">b</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kp">&amp;</span><span class="o">&#39;</span><span class="na">a</span> <span class="p">[</span><span class="kt">u8</span><span class="p">]</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="bp">self</span><span class="p">.</span><span class="n">pos</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
+<span class="w">        </span><span class="o">&amp;</span><span class="bp">self</span><span class="p">.</span><span class="n">buf</span><span class="p">[</span><span class="bp">self</span><span class="p">.</span><span class="n">pos</span><span class="o">-</span><span class="mi">3</span><span class="o">..</span><span class="bp">self</span><span class="p">.</span><span class="n">pos</span><span class="p">]</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">print</span><span class="p">(</span><span class="n">b1</span><span class="w"> </span>:<span class="kp">&amp;</span><span class="p">[</span><span class="kt">u8</span><span class="p">],</span><span class="w"> </span><span class="n">b2</span>: <span class="kp">&amp;</span><span class="p">[</span><span class="kt">u8</span><span class="p">])</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;{:#?} {:#?}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">b1</span><span class="p">,</span><span class="w"> </span><span class="n">b2</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="fm">vec!</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">];</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">buf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Buffer</span>::<span class="n">new</span><span class="p">(</span><span class="o">&amp;</span><span class="n">v</span><span class="p">);</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">b1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">buf</span><span class="p">.</span><span class="n">read_bytes</span><span class="p">();</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">b2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">buf</span><span class="p">.</span><span class="n">read_bytes</span><span class="p">();</span>
+<span class="w">    </span><span class="n">print</span><span class="p">(</span><span class="n">b1</span><span class="p">,</span><span class="w"> </span><span class="n">b2</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+</li>
+</ul>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            回到页面顶部
+          </button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © 2024 [Nullptr]
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.annotate", "content.tooltips", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.b4d07000.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -18,6 +18,8 @@
         <link rel="prev" href="../doc-3/">
       
       
+        <link rel="next" href="../doc-5/">
+      
       <link rel="icon" href="../images/logo.svg">
       <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.14">
     
@@ -75,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#rust-4" class="md-skip">
+        <a href="#_1" class="md-skip">
           跳转至
         </a>
       
@@ -323,6 +325,10 @@
         
           
         
+          
+        
+          
+        
       
       
         <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
@@ -344,7 +350,7 @@
   
     <li class="md-nav__item">
       <a href="../doc-1/" class="md-nav__link">
-        从 Cargo 说到基本类型
+        Cargo 与基本类型
       </a>
     </li>
   
@@ -439,10 +445,52 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#trait-object" class="md-nav__link">
+    特征对象 Trait Object
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dive-into-trait" class="md-nav__link">
+    深入了解特征 Dive into Trait
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
       
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../doc-5/" class="md-nav__link">
+        集合类型与生命周期
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../doc-6/" class="md-nav__link">
+        错误处理与项目结构
+      </a>
     </li>
   
 
@@ -501,6 +549,20 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#trait-object" class="md-nav__link">
+    特征对象 Trait Object
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dive-into-trait" class="md-nav__link">
+    深入了解特征 Dive into Trait
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -519,12 +581,12 @@
   
 
 
-<h1 id="rust-4">Rust 学习笔记 - 4<a class="headerlink" href="#rust-4" title="Permanent link">&para;</a></h1>
+<h1 id="_1">泛型与特征<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
 <hr />
 <h2 id="method">方法 Method<a class="headerlink" href="#method" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p>使用 <code>impl</code> 为**结构体、枚举或特征**定义方法.</p>
+<p>使用 <code>impl</code> 为 <strong>结构体、枚举或特征</strong> 定义方法.</p>
 <div class="highlight"><pre><span></span><code><span class="k">struct</span> <span class="nc">Circle</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="n">x</span>: <span class="kt">f64</span><span class="p">,</span>
 <span class="w">    </span><span class="n">y</span>: <span class="kt">f64</span><span class="p">,</span>
@@ -574,7 +636,7 @@
 </code></pre></div>
 </li>
 <li>
-<p><code>impl</code> 块内, <strong><code>Self</code></strong> 指代被实现方法的**结构体类型**, <strong><code>self</code></strong> 指代此类型的**实例**.</p>
+<p><code>impl</code> 块内, <strong><code>Self</code></strong> 指代被实现方法的 <strong>结构体类型</strong>, <strong><code>self</code></strong> 指代此类型的 <strong>实例</strong>.</p>
 <ul>
 <li><code>self</code> 表示所有权转移到该方法中.</li>
 <li><code>&amp;self</code> 表示该方法对实例的不可变借用.</li>
@@ -603,22 +665,22 @@
 </code></pre></div>
 </li>
 <li>
-<p>Rust 支持**自动引用和解引用**, 当使用 <code>object.something()</code> 调用方法时, 会自动为 <code>object</code> 添加 <code>&amp;</code>, <code>&amp;mut</code> 或 <code>*</code> 以便**与方法签名匹配**:</p>
+<p>Rust 支持 <strong>自动引用和解引用</strong>, 当使用 <code>object.something()</code> 调用方法时, 会自动为 <code>object</code> 添加 <code>&amp;</code>, <code>&amp;mut</code> 或 <code>*</code> 以便 <strong>与方法签名匹配</strong>:</p>
 <div class="highlight"><pre><span></span><code><span class="c1">// 两种等价写法</span>
 <span class="n">p1</span><span class="p">.</span><span class="n">distance</span><span class="p">(</span><span class="o">&amp;</span><span class="n">p2</span><span class="p">);</span>
 <span class="p">(</span><span class="o">&amp;</span><span class="n">p1</span><span class="p">).</span><span class="n">distance</span><span class="p">(</span><span class="o">&amp;</span><span class="n">p2</span><span class="p">);</span>
 </code></pre></div>
-<p>这种自动引用行为之所以有效, 是因为方法有一个**明确的接收者 <code>self</code> 的类型**.</p>
+<p>这种自动引用行为之所以有效, 是因为方法有一个 <strong>明确的接收者 <code>self</code> 的类型</strong>.</p>
 </li>
 </ul>
 <hr />
 <h2 id="generics">泛型 Generics<a class="headerlink" href="#generics" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>特征**的目的是让**类型实现相应的功能</strong>.</p>
+<p><strong>特征</strong> 的目的是让 <strong>类型实现相应的功能</strong>.</p>
 </li>
 <li>
-<p>**函数**中使用泛型:</p>
+<p><strong>函数</strong> 中使用泛型:</p>
 <div class="highlight"><pre><span></span><code><span class="k">fn</span> <span class="nf">add</span><span class="o">&lt;</span><span class="n">T</span>: <span class="nc">std</span>::<span class="n">ops</span>::<span class="n">Add</span><span class="o">&lt;</span><span class="n">Output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">T</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="n">a</span>:<span class="nc">T</span><span class="p">,</span><span class="w"> </span><span class="n">b</span>:<span class="nc">T</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">T</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="n">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span>
 <span class="p">}</span>
@@ -662,7 +724,7 @@
 </code></pre></div>
 </li>
 <li>
-<p>**结构体**中使用泛型:</p>
+<p><strong>结构体</strong> 中使用泛型:</p>
 <div class="highlight"><pre><span></span><code><span class="k">struct</span> <span class="nc">Point</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="n">U</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="n">x</span>: <span class="nc">T</span><span class="p">,</span>
 <span class="w">    </span><span class="n">y</span>: <span class="nc">U</span><span class="p">,</span>
@@ -673,7 +735,7 @@
 </code></pre></div>
 </li>
 <li>
-<p>**枚举**中使用泛型:</p>
+<p><strong>枚举</strong> 中使用泛型:</p>
 <div class="highlight"><pre><span></span><code><span class="c1">// 常用于函数的返回值类型</span>
 <span class="k">enum</span> <span class="nb">Option</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="nb">Some</span><span class="p">(</span><span class="n">T</span><span class="p">),</span>
@@ -687,7 +749,7 @@
 </code></pre></div>
 </li>
 <li>
-<p>**方法**中使用泛型:</p>
+<p><strong>方法</strong> 中使用泛型:</p>
 <div class="highlight"><pre><span></span><code><span class="k">struct</span> <span class="nc">Point</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="n">x</span>: <span class="nc">T</span><span class="p">,</span>
 <span class="w">    </span><span class="n">y</span>: <span class="nc">T</span><span class="p">,</span>
@@ -731,7 +793,7 @@
 </code></pre></div>
 </li>
 <li>
-<p><strong><code>const</code> 泛型**是**针对值的泛型</strong>, 可以用于处理数组长度的问题.</p>
+<p><strong><code>const</code> 泛型</strong> 是 <strong>针对值的泛型</strong>, 可以用于处理数组长度的问题.</p>
 <div class="highlight"><pre><span></span><code><span class="k">fn</span> <span class="nf">display</span><span class="o">&lt;</span><span class="n">T</span>: <span class="nc">std</span>::<span class="n">fmt</span>::<span class="n">Debug</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">N</span>: <span class="kt">usize</span><span class="o">&gt;</span><span class="p">(</span><span class="n">arr</span>: <span class="p">[</span><span class="n">T</span><span class="p">;</span><span class="w"> </span><span class="n">N</span><span class="p">])</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;{:?}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">arr</span><span class="p">);</span>
 <span class="p">}</span>
@@ -745,7 +807,7 @@
 </code></pre></div>
 </li>
 <li>
-<p><strong><code>const</code> 泛型参数**只能使用以下形式的**实参</strong>:</p>
+<p><strong><code>const</code> 泛型参数</strong> 只能使用以下形式的 <strong>实参</strong>:</p>
 <ul>
 <li><strong>单独的 <code>const</code> 泛型参数.</strong></li>
 <li><strong>字面量.</strong></li>
@@ -767,7 +829,7 @@
 </code></pre></div>
 </li>
 <li>
-<p><strong><code>const</code> 泛型表达式**在编译时就能够确定出结果, 可以**限制函数参数占用的内存大小</strong>.</p>
+<p><strong><code>const</code> 泛型表达式</strong> 在编译时就能够确定出结果, 可以 <strong>限制函数参数占用的内存大小</strong>.</p>
 <div class="highlight"><pre><span></span><code><span class="c1">// 目前只能在 nightly 版本下使用</span>
 <span class="cp">#![allow(incomplete_features)]</span>
 <span class="cp">#![feature(generic_const_exprs)]</span>
@@ -791,11 +853,387 @@
 </code></pre></div>
 </li>
 <li>
-<p>泛型是**零成本的抽象**, 使用泛型时**没有运行时开销**, 获得了性能上的巨大优势, 但损失了**编译速度**和增大了**最终生成文件的大小**; 编译时进行泛型代码的**单态化**来保证效率.</p>
+<p>泛型是 <strong>零成本的抽象</strong>, 使用泛型时 <strong>没有运行时开销</strong>, 获得了性能上的巨大优势, 但损失了 <strong>编译速度</strong> 和增大了 <strong>最终生成文件的大小</strong>; 编译时进行泛型代码的 <strong>单态化</strong> 来保证效率.</p>
 </li>
 </ul>
 <hr />
 <h2 id="trait">特征 Trait<a class="headerlink" href="#trait" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p>特征定义了 <strong>一组被共享的行为</strong>, 只要实现了特征, 就能使用这组行为; <strong>定义特征</strong> 是把一些方法组合在一起, 定义一个实现某些目标 <strong>所必需的行为集合</strong>.</p>
+</li>
+<li>
+<p>特征只定义行为 <strong>看起来是什么样</strong>, 只 <strong>定义特征方法签名</strong> 而 <strong>不进行实现</strong>; 每一个实现这个特征的类型都需要具体实现相应方法.</p>
+<div class="highlight"><pre><span></span><code><span class="k">pub</span><span class="w"> </span><span class="k">trait</span><span class="w"> </span><span class="n">Summary</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">fn</span> <span class="nf">summarize</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">String</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">pub</span><span class="w"> </span><span class="k">struct</span> <span class="nc">Post</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">title</span>: <span class="nb">String</span><span class="p">,</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">author</span>: <span class="nb">String</span><span class="p">,</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">content</span>: <span class="nb">String</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="k">impl</span><span class="w"> </span><span class="n">Summary</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">Post</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">fn</span> <span class="nf">summarize</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">String</span> <span class="p">{</span>
+<span class="w">        </span><span class="fm">format!</span><span class="p">(</span><span class="s">&quot;文章{}, 作者是{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">author</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+<span class="o">------------------------------------------------------</span>
+<span class="k">struct</span> <span class="nc">Foo</span><span class="p">;</span>
+<span class="k">struct</span> <span class="nc">Bar</span><span class="p">;</span>
+
+<span class="cp">#[derive(PartialEq, Debug)]</span>
+<span class="k">struct</span> <span class="nc">BarFoo</span><span class="p">;</span>
+
+<span class="k">impl</span><span class="w"> </span><span class="n">std</span>::<span class="n">ops</span>::<span class="n">Sub</span><span class="o">&lt;</span><span class="n">Foo</span><span class="o">&gt;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">Bar</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">type</span> <span class="nc">Output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BarFoo</span><span class="p">;</span>
+<span class="w">    </span><span class="k">fn</span> <span class="nf">sub</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">_rhs</span>: <span class="nc">Foo</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">BarFoo</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">BarFoo</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</li>
+<li>
+<p><strong>孤儿规则</strong>: 为类型 <code>A</code> 实现特征 <code>T</code>, 那么 <strong><code>A</code> 或者 <code>T</code> 至少有一个在当前作用域中定义</strong>, 确保其它人编写的代码不会破坏你的代码.</p>
+</li>
+<li>
+<p>在特征中定义具有 <strong>默认实现</strong> 的方法, 其它类型无需实现, 也可以重载该方法; 默认实现 <strong>允许调用相同特征中的其他方法</strong>, 哪怕这些方法没有默认实现.</p>
+<div class="highlight"><pre><span></span><code><span class="k">pub</span><span class="w"> </span><span class="k">trait</span><span class="w"> </span><span class="n">Summary</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">fn</span> <span class="nf">summarize_author</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">String</span><span class="p">;</span>
+<span class="w">    </span><span class="k">fn</span> <span class="nf">summarize</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">String</span> <span class="p">{</span>
+<span class="w">        </span><span class="fm">format!</span><span class="p">(</span><span class="s">&quot;(Read more {}...)&quot;</span><span class="p">,</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">summarize_author</span><span class="p">())</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">impl</span><span class="w"> </span><span class="n">Summary</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">Weibo</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">fn</span> <span class="nf">summarize_author</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">String</span> <span class="p">{</span>
+<span class="w">        </span><span class="fm">format!</span><span class="p">(</span><span class="s">&quot;@{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">username</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</li>
+<li>
+<p><strong>特征约束</strong>: 特征可以作为 <strong>函数参数</strong>, 在函数体内调用该特征的方法.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// 特征约束</span>
+<span class="k">fn</span> <span class="nf">func</span><span class="p">(</span><span class="n">item</span>: <span class="kp">&amp;</span><span class="nc">impl</span><span class="w"> </span><span class="n">Summary</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span>
+
+<span class="k">fn</span> <span class="nf">func</span><span class="o">&lt;</span><span class="n">T</span>: <span class="nc">Summary</span><span class="o">&gt;</span><span class="p">(</span><span class="n">item</span>: <span class="kp">&amp;</span><span class="nc">T</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span>
+<span class="o">------------------------------------------------------</span>
+<span class="c1">// 多重约束</span>
+<span class="k">fn</span> <span class="nf">func</span><span class="p">(</span><span class="n">item</span>: <span class="kp">&amp;</span><span class="p">(</span><span class="k">impl</span><span class="w"> </span><span class="n">Summary</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Display</span><span class="p">))</span><span class="w"> </span><span class="p">{}</span>
+
+<span class="k">fn</span> <span class="nf">func</span><span class="o">&lt;</span><span class="n">T</span>: <span class="nc">Summary</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Display</span><span class="o">&gt;</span><span class="p">(</span><span class="n">item</span>: <span class="kp">&amp;</span><span class="nc">T</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span>
+<span class="o">------------------------------------------------------</span>
+<span class="c1">// Where 约束</span>
+<span class="k">fn</span> <span class="nf">func</span><span class="o">&lt;</span><span class="n">T</span>: <span class="nc">Display</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">Clone</span><span class="p">,</span><span class="w"> </span><span class="n">U</span>: <span class="nc">Debug</span><span class="o">&gt;</span><span class="p">(</span><span class="n">t</span>: <span class="kp">&amp;</span><span class="nc">T</span><span class="p">,</span><span class="w"> </span><span class="n">u</span>: <span class="kp">&amp;</span><span class="nc">U</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">i32</span> <span class="p">{}</span>
+
+<span class="k">fn</span> <span class="nf">func</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">U</span><span class="o">&gt;</span><span class="p">(</span><span class="n">t</span>: <span class="kp">&amp;</span><span class="nc">T</span><span class="p">,</span><span class="w"> </span><span class="n">u</span>: <span class="kp">&amp;</span><span class="nc">U</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">i32</span>
+<span class="nc">where</span>
+<span class="w">    </span><span class="n">T</span>: <span class="nc">Display</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">Clone</span><span class="p">,</span><span class="w"> </span><span class="n">U</span>: <span class="nb">Clone</span> <span class="o">+</span><span class="w"> </span><span class="n">Debug</span>
+<span class="p">{}</span>
+</code></pre></div>
+</li>
+<li>
+<p><strong>特征约束</strong> 可以在 <strong>指定类型 + 指定特征</strong> 的条件下去 <strong>实现方法</strong>.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// `PartialOrd` trait 依赖于 `PartialEq` trait</span>
+<span class="cp">#[derive(Debug, PartialEq, PartialOrd)]</span>
+<span class="k">struct</span> <span class="nc">Unit</span><span class="p">(</span><span class="kt">i32</span><span class="p">);</span>
+
+<span class="k">struct</span> <span class="nc">Pair</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">x</span>: <span class="nc">T</span><span class="p">,</span>
+<span class="w">    </span><span class="n">y</span>: <span class="nc">T</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="k">impl</span><span class="o">&lt;</span><span class="n">T</span>: <span class="nc">Debug</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">PartialOrd</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Pair</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">fn</span> <span class="nf">cmp_display</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;The largest member x = {:?}&quot;</span><span class="p">,</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">x</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">pair</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Pair</span><span class="p">{</span><span class="w"> </span><span class="n">x</span>: <span class="nc">Unit</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">y</span>: <span class="nc">Unit</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="p">};</span>
+<span class="w">    </span><span class="n">pair</span><span class="p">.</span><span class="n">cmp_display</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div>
+</li>
+<li>
+<p><strong>特征约束</strong> 中使用 <strong><code>Fn</code> 特征</strong> 支持 <strong>接受闭包类型作为参数</strong>.</p>
+<div class="highlight"><pre><span></span><code><span class="k">struct</span> <span class="nc">Cacher</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
+<span class="w">    </span><span class="k">where</span><span class="w"> </span><span class="n">T</span>: <span class="nb">Fn</span><span class="p">(</span><span class="kt">u32</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">u32</span><span class="p">,</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">calculation</span>: <span class="nc">T</span><span class="p">,</span>
+<span class="w">    </span><span class="n">value</span>: <span class="nb">Option</span><span class="o">&lt;</span><span class="kt">u32</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">impl</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Cacher</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
+<span class="w">    </span><span class="k">where</span><span class="w"> </span><span class="n">T</span>: <span class="nb">Fn</span><span class="p">(</span><span class="kt">u32</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">u32</span><span class="p">,</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">fn</span> <span class="nf">new</span><span class="p">(</span><span class="n">calculation</span>: <span class="nc">T</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">Cacher</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Cacher</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">calculation</span><span class="p">,</span>
+<span class="w">            </span><span class="n">value</span>: <span class="nb">None</span><span class="p">,</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">fn</span> <span class="nf">value</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">arg</span>: <span class="kt">u32</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">u32</span> <span class="p">{</span>
+<span class="w">        </span><span class="k">match</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">value</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nb">Some</span><span class="p">(</span><span class="n">v</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">v</span><span class="p">,</span>
+<span class="w">            </span><span class="nb">None</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="kd">let</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">calculation</span><span class="p">)(</span><span class="n">arg</span><span class="p">);</span>
+<span class="w">                </span><span class="bp">self</span><span class="p">.</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="n">v</span><span class="p">);</span>
+<span class="w">                </span><span class="n">v</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">cacher</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Cacher</span>::<span class="n">new</span><span class="p">(</span><span class="o">|</span><span class="n">x</span><span class="o">|</span><span class="w"> </span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+<span class="fm">assert_eq!</span><span class="p">(</span><span class="n">cacher</span><span class="p">.</span><span class="n">value</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span><span class="w"> </span><span class="mi">21</span><span class="p">);</span>
+<span class="fm">assert_eq!</span><span class="p">(</span><span class="n">cacher</span><span class="p">.</span><span class="n">value</span><span class="p">(</span><span class="mi">25</span><span class="p">),</span><span class="w"> </span><span class="mi">21</span><span class="p">);</span>
+</code></pre></div>
+</li>
+<li>
+<p><strong>特征</strong> 通过 <code>impl Trait</code> 作为 <strong>函数返回值,</strong> 声明 <strong>返回的类型实现了某个特征</strong>; 当函数返回多个类型时, 需要引入 <strong>特征对象</strong>.</p>
+<div class="highlight"><pre><span></span><code><span class="k">fn</span> <span class="nf">returns_summarizable</span><span class="p">()</span><span class="w"> </span>-&gt; <span class="nc">impl</span><span class="w"> </span><span class="n">Summary</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">Weibo</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">username</span>: <span class="nb">String</span>::<span class="n">from</span><span class="p">(</span><span class="s">&quot;sunface&quot;</span><span class="p">),</span>
+<span class="w">        </span><span class="n">content</span>: <span class="nb">String</span>::<span class="n">from</span><span class="p">(</span>
+<span class="w">            </span><span class="s">&quot;m1 max太厉害了，电脑再也不会卡&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</li>
+<li>
+<p><strong><code>derive</code> 派生特征</strong> 的对象 <strong>自动实现对应的默认特征代码</strong>, 还可以手动重载实现.</p>
+</li>
+<li>
+<p><strong>调用特征方法</strong> 需要将特征 <strong>引入当前作用域</strong> (<strong>运算符</strong> 是 <strong>特征方法调用</strong> 的语法糖).</p>
+<div class="highlight"><pre><span></span><code><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">convert</span>::<span class="n">TryInto</span><span class="p">;</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">a</span>: <span class="kt">i32</span> <span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">b</span>: <span class="kt">u16</span> <span class="o">=</span><span class="w"> </span><span class="mi">100</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">try_into</span><span class="p">().</span><span class="n">unwrap</span><span class="p">();</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;Ten is less than one hundred.&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</li>
+</ul>
+<hr />
+<h2 id="trait-object">特征对象 Trait Object<a class="headerlink" href="#trait-object" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p><strong>特征对象</strong> 指向 <strong>实现了某特征的类型实例</strong>, 这种映射关系 <strong>存储在一张表中</strong>, 在 <strong>运行时</strong> 通过特征对象 <strong>找到具体调用的类型方法</strong>.</p>
+</li>
+<li>
+<p><strong>特征对象</strong> 大小不固定, 但其 <strong>引用类型</strong> 由指针 <code>ptr</code> 和 <code>vptr</code> 组成, <strong>大小固定</strong>.</p>
+</li>
+<li>
+<p>通过 <strong><code>&amp;</code> 引用</strong> 或者 <strong><code>Box&lt;T&gt;</code> 智能指针</strong> 的方式创建特征对象; <strong><code>dyn</code> 关键字</strong> 只用在特征对象的 <strong>类型声明</strong> 上, 在创建时无需使用.</p>
+<div class="highlight"><pre><span></span><code><span class="k">trait</span><span class="w"> </span><span class="n">Draw</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">fn</span> <span class="nf">draw</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">String</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">impl</span><span class="w"> </span><span class="n">Draw</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="kt">u8</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">fn</span> <span class="nf">draw</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">String</span> <span class="p">{</span>
+<span class="w">        </span><span class="fm">format!</span><span class="p">(</span><span class="s">&quot;u8: {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="bp">self</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+<span class="k">impl</span><span class="w"> </span><span class="n">Draw</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="kt">f64</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">fn</span> <span class="nf">draw</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">String</span> <span class="p">{</span>
+<span class="w">        </span><span class="fm">format!</span><span class="p">(</span><span class="s">&quot;f64: {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="bp">self</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// 实现 Draw 特征, 传入的 Box&lt;T&gt; 可隐式转换成 Box&lt;dyn Draw&gt;</span>
+<span class="c1">// 实现 Deref 特征, Box 智能指针会自动解引用为包裹的值</span>
+<span class="k">fn</span> <span class="nf">draw1</span><span class="p">(</span><span class="n">x</span>: <span class="nb">Box</span><span class="o">&lt;</span><span class="k">dyn</span><span class="w"> </span><span class="n">Draw</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">x</span><span class="p">.</span><span class="n">draw</span><span class="p">();</span>
+<span class="p">}</span>
+<span class="k">fn</span> <span class="nf">draw2</span><span class="p">(</span><span class="n">x</span>: <span class="kp">&amp;</span><span class="nc">dyn</span><span class="w"> </span><span class="n">Draw</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">x</span><span class="p">.</span><span class="n">draw</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.1</span><span class="k">f64</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="k">u8</span><span class="p">;</span>
+<span class="w">    </span><span class="n">draw1</span><span class="p">(</span><span class="nb">Box</span>::<span class="n">new</span><span class="p">(</span><span class="n">x</span><span class="p">));</span>
+<span class="w">    </span><span class="n">draw1</span><span class="p">(</span><span class="nb">Box</span>::<span class="n">new</span><span class="p">(</span><span class="n">y</span><span class="p">));</span>
+<span class="w">    </span><span class="n">draw2</span><span class="p">(</span><span class="o">&amp;</span><span class="n">x</span><span class="p">);</span>
+<span class="w">    </span><span class="n">draw2</span><span class="p">(</span><span class="o">&amp;</span><span class="n">y</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+</li>
+<li>
+<p><strong>特征对象</strong> 的优势是 <strong>无需在运行时检查一个值是否实现了特定方法</strong>, 否则会 <strong>产生编译期错误</strong>.</p>
+</li>
+<li>
+<p><strong>静态分发 (static dispatch)</strong>: 泛型是在 <strong>编译期完成处理</strong>, 编译器为每个泛型参数对应的具体类型生成一份代码, 对于 <strong>运行期性能完全没有影响</strong>.</p>
+</li>
+<li>
+<p><strong>动态分发 (dynamic dispatch)</strong>: 关键字 <code>dyn</code> 在 <strong>运行时确定</strong> 需要调用什么方法.</p>
+</li>
+<li>
+<p><strong>特征对象的安全性</strong>: 方法 <strong>返回类型不能是 <code>Self</code></strong>; 方法 <strong>没有泛型参数</strong> (特征对象不关心实现该特征的具体类型).</p>
+</li>
+</ul>
+<hr />
+<h2 id="dive-into-trait">深入了解特征 Dive into Trait<a class="headerlink" href="#dive-into-trait" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p><strong>关联类型</strong> 是在特征定义的语句块中申明的 <strong>自定义类型</strong>, 可以在 <strong>特征的方法签名中</strong> 使用该类型, 目的是 <strong>代码的可读性</strong> (所以 <strong>不使用泛型</strong>).</p>
+<div class="highlight"><pre><span></span><code><span class="k">pub</span><span class="w"> </span><span class="k">trait</span><span class="w"> </span><span class="nb">Iterator</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">type</span> <span class="nc">Item</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">// 通过 Self::type 使用该类型</span>
+<span class="w">    </span><span class="k">fn</span> <span class="nf">next</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">Option</span><span class="o">&lt;</span><span class="bp">Self</span>::<span class="n">Item</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">impl</span><span class="w"> </span><span class="nb">Iterator</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">Counter</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">type</span> <span class="nc">Item</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">u32</span><span class="p">;</span>
+<span class="w">    </span><span class="k">fn</span> <span class="nf">next</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">Option</span><span class="o">&lt;</span><span class="bp">Self</span>::<span class="n">Item</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// --snip--</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Counter</span><span class="p">{</span><span class="o">..</span><span class="p">}</span>
+<span class="w">    </span><span class="n">c</span><span class="p">.</span><span class="n">next</span><span class="p">()</span>
+<span class="p">}</span>
+<span class="o">------------------------------------------------------</span>
+<span class="k">trait</span><span class="w"> </span><span class="n">Contains</span><span class="o">&lt;</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">B</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">fn</span> <span class="nf">contains</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">_</span>: <span class="kp">&amp;</span><span class="nc">A</span><span class="p">,</span><span class="w"> </span><span class="n">_</span>: <span class="kp">&amp;</span><span class="nc">B</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">bool</span><span class="p">;</span>
+<span class="w">    </span><span class="k">fn</span> <span class="nf">first</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">i32</span><span class="p">;</span>
+<span class="w">    </span><span class="k">fn</span> <span class="nf">last</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">i32</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">impl</span><span class="w"> </span><span class="n">Contains</span><span class="o">&lt;</span><span class="kt">i32</span><span class="p">,</span><span class="w"> </span><span class="kt">i32</span><span class="o">&gt;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">Container</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">fn</span> <span class="nf">contains</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">a</span>: <span class="kp">&amp;</span><span class="kt">i32</span><span class="p">,</span><span class="w"> </span><span class="n">b</span>: <span class="kp">&amp;</span><span class="kt">i32</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">bool</span> <span class="p">{</span>
+<span class="w">        </span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">.</span><span class="mi">0</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">a</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">.</span><span class="mi">1</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">b</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">fn</span> <span class="nf">first</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">i32</span> <span class="p">{</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="mi">0</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="k">fn</span> <span class="nf">last</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">i32</span> <span class="p">{</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="mi">1</span><span class="w"> </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">difference</span><span class="o">&lt;</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">B</span><span class="p">,</span><span class="w"> </span><span class="n">C</span>: <span class="nc">Contains</span><span class="o">&lt;</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">B</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="n">container</span>: <span class="kp">&amp;</span><span class="nc">C</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">i32</span> <span class="p">{</span>
+<span class="w">    </span><span class="n">container</span><span class="p">.</span><span class="n">last</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">container</span><span class="p">.</span><span class="n">first</span><span class="p">()</span>
+<span class="p">}</span>
+<span class="o">------------------------------------------------------</span>
+<span class="k">trait</span><span class="w"> </span><span class="n">Contains</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">type</span> <span class="nc">A</span><span class="p">;</span>
+<span class="w">    </span><span class="k">type</span> <span class="nc">B</span><span class="p">;</span>
+<span class="w">    </span><span class="k">fn</span> <span class="nf">contains</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">_</span>: <span class="kp">&amp;</span><span class="nc">Self</span>::<span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">_</span>: <span class="kp">&amp;</span><span class="nc">Self</span>::<span class="n">B</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">bool</span><span class="p">;</span>
+<span class="w">    </span><span class="k">fn</span> <span class="nf">first</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">i32</span><span class="p">;</span>
+<span class="w">    </span><span class="k">fn</span> <span class="nf">last</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">i32</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">impl</span><span class="w"> </span><span class="n">Contains</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">Container</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">type</span> <span class="nc">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">i32</span><span class="p">;</span>
+<span class="w">    </span><span class="k">type</span> <span class="nc">B</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">i32</span><span class="p">;</span>
+<span class="w">    </span><span class="k">fn</span> <span class="nf">contains</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">a</span>: <span class="kp">&amp;</span><span class="nc">Self</span>::<span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">b</span>: <span class="kp">&amp;</span><span class="nc">Self</span>::<span class="n">B</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">bool</span> <span class="p">{</span>
+<span class="w">        </span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">.</span><span class="mi">0</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">a</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">.</span><span class="mi">1</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">b</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">fn</span> <span class="nf">first</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">i32</span> <span class="p">{</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="mi">0</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="k">fn</span> <span class="nf">last</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">i32</span> <span class="p">{</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="mi">1</span><span class="w"> </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">difference</span><span class="o">&lt;</span><span class="n">C</span>: <span class="nc">Contains</span><span class="o">&gt;</span><span class="p">(</span><span class="n">container</span>: <span class="kp">&amp;</span><span class="nc">C</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">i32</span> <span class="p">{</span>
+<span class="w">    </span><span class="n">container</span><span class="p">.</span><span class="n">last</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">container</span><span class="p">.</span><span class="n">first</span><span class="p">()</span>
+<span class="p">}</span>
+</code></pre></div>
+</li>
+<li>
+<p>特征 <strong>使用泛型类型参数</strong> 时, 可以 <strong>指定一个默认的具体类型</strong>.</p>
+<div class="highlight"><pre><span></span><code><span class="k">trait</span><span class="w"> </span><span class="n">Add</span><span class="o">&lt;</span><span class="n">RHS</span><span class="o">=</span><span class="bp">Self</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">type</span> <span class="nc">Output</span><span class="p">;</span>
+<span class="w">    </span><span class="k">fn</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">rhs</span>: <span class="nc">RHS</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">Self</span>::<span class="n">Output</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="o">------------------------------------------------------</span>
+<span class="cp">#[derive(Debug, PartialEq)]</span>
+<span class="k">struct</span> <span class="nc">Point</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">x</span>: <span class="kt">i32</span><span class="p">,</span>
+<span class="w">    </span><span class="n">y</span>: <span class="kt">i32</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">impl</span><span class="w"> </span><span class="n">Add</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">Point</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">type</span> <span class="nc">Output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Point</span><span class="p">;</span>
+<span class="w">    </span><span class="k">fn</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">other</span>: <span class="nc">Point</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">Point</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Point</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">x</span>: <span class="nc">self</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">other</span><span class="p">.</span><span class="n">x</span><span class="p">,</span>
+<span class="w">            </span><span class="n">y</span>: <span class="nc">self</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">other</span><span class="p">.</span><span class="n">y</span><span class="p">,</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+<span class="o">------------------------------------------------------</span>
+<span class="k">struct</span> <span class="nc">Millimeters</span><span class="p">(</span><span class="kt">u32</span><span class="p">);</span>
+<span class="k">struct</span> <span class="nc">Meters</span><span class="p">(</span><span class="kt">u32</span><span class="p">);</span>
+
+<span class="k">impl</span><span class="w"> </span><span class="n">Add</span><span class="o">&lt;</span><span class="n">Meters</span><span class="o">&gt;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">Millimeters</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">type</span> <span class="nc">Output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Millimeters</span><span class="p">;</span>
+<span class="w">    </span><span class="k">fn</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">other</span>: <span class="nc">Meters</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">Millimeters</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Millimeters</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="mi">0</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">other</span><span class="p">.</span><span class="mi">0</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">1000</span><span class="p">))</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</li>
+<li>
+<p><strong>类型和特征</strong> 定义了 <strong>同名方法</strong> 时, 编译器 <strong>默认调用类型中定义的方法</strong>, <strong>调用特征的方法</strong> 需要使用 <strong>显式调用语法</strong>.</p>
+<div class="highlight"><pre><span></span><code><span class="kd">let</span><span class="w"> </span><span class="n">person</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Human</span><span class="p">;</span>
+<span class="n">person</span><span class="p">.</span><span class="n">fly</span><span class="p">();</span><span class="w"> </span><span class="c1">// 调用 Human 类型自身的方法</span>
+<span class="n">Pilot</span>::<span class="n">fly</span><span class="p">(</span><span class="o">&amp;</span><span class="n">person</span><span class="p">);</span><span class="w"> </span><span class="c1">// 调用 Pilot 特征上的方法</span>
+<span class="n">Wizard</span>::<span class="n">fly</span><span class="p">(</span><span class="o">&amp;</span><span class="n">person</span><span class="p">);</span><span class="w"> </span><span class="c1">// 调用 Wizard 特征上的方法</span>
+</code></pre></div>
+</li>
+<li>
+<p><strong>方法没有 <code>self</code> 参数 (关联函数)</strong> 时, 需要使用 <strong>完全限定语法</strong> <code>&lt;Type as Trait&gt;::function(receiver_if_method, next_arg, ...)</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="n">Dog</span>::<span class="n">baby_name</span><span class="p">();</span><span class="w"> </span><span class="c1">// 调用 Dog 类型自身的方法</span>
+<span class="o">&lt;</span><span class="n">Dog</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">Animal</span><span class="o">&gt;</span>::<span class="n">baby_name</span><span class="p">();</span><span class="w"> </span><span class="c1">// 调用 Animal 特征上的方法</span>
+</code></pre></div>
+</li>
+<li>
+<p><strong><code>supertrait</code></strong>: 需要让特征 A 使用特征 B 的功能 (另一种形式的 <strong>特征约束</strong>), 要 <strong>为类型实现特征 A 和特征 B</strong>.</p>
+<div class="highlight"><pre><span></span><code><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">fmt</span>::<span class="n">Display</span><span class="p">;</span>
+
+<span class="k">trait</span><span class="w"> </span><span class="n">OutlinePrint</span>: <span class="nc">Display</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">fn</span> <span class="nf">outline_print</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">to_string</span><span class="p">();</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">len</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">output</span><span class="p">.</span><span class="n">len</span><span class="p">();</span>
+<span class="w">        </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;*&quot;</span><span class="p">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">len</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">4</span><span class="p">));</span>
+<span class="w">        </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;*{}*&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="p">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">len</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="p">));</span>
+<span class="w">        </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;* {} *&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">output</span><span class="p">);</span>
+<span class="w">        </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;*{}*&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="p">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">len</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="p">));</span>
+<span class="w">        </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;*&quot;</span><span class="p">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">len</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">4</span><span class="p">));</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</li>
+<li>
+<p><strong><code>newtype</code> 模式</strong>: 绕过 <strong>孤儿规则</strong>, 创建一个 <strong>元组结构体</strong> 新类型, 该结构体 <strong>封装了希望实现特征的具体类型</strong>, 相当于 <strong>一层装饰器</strong>.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// 为 Vec&lt;T&gt; 实现 Display 特征</span>
+<span class="c1">// 没有什么是加一层解决不了的, 如果不行那就再加一层</span>
+<span class="k">struct</span> <span class="nc">Wrapper</span><span class="p">(</span><span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span><span class="p">);</span>
+
+<span class="k">impl</span><span class="w"> </span><span class="n">Display</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">Wrapper</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">fn</span> <span class="nf">fmt</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">f</span>: <span class="kp">&amp;</span><span class="nc">mut</span><span class="w"> </span><span class="n">fmt</span>::<span class="n">Formatter</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">fmt</span>::<span class="nb">Result</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="fm">write!</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;[{}]&quot;</span><span class="p">,</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="mf">0.</span><span class="n">join</span><span class="p">(</span><span class="s">&quot;, &quot;</span><span class="p">))</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">impl</span><span class="w"> </span><span class="n">Deref</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">Wrapper</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">type</span> <span class="nc">Target</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Vec</span><span class="p">;</span>
+<span class="w">    </span><span class="k">fn</span> <span class="nf">deref</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kp">&amp;</span><span class="nc">Self</span>::<span class="n">Target</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="o">&amp;</span><span class="bp">self</span><span class="p">.</span><span class="mi">0</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Wrapper</span><span class="p">(</span><span class="fm">vec!</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">]);</span>
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;w = {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">w</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+</li>
+</ul>
 
 
 
